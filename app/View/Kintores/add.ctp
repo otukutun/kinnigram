@@ -7,6 +7,7 @@
 				echo $this->BootstrapForm->input('category_id');
 				echo $this->BootstrapForm->input('category');
 				echo $this->BootstrapForm->input('nice_sum');
+				echo $this->BootstrapForm->input('file');
 				?>
 				<?php echo $this->BootstrapForm->submit(__('Submit'));?>
 			</fieldset>

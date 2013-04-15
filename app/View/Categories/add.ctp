@@ -4,6 +4,7 @@
 			<fieldset>
 				<legend><?php echo __('Add %s', __('Category')); ?></legend>
 				<?php
+				echo $this->BootstrapForm->input('name');
 				?>
 				<?php echo $this->BootstrapForm->submit(__('Submit'));?>
 			</fieldset>

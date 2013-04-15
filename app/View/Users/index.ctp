@@ -18,6 +18,7 @@
 				<th><?php echo $this->BootstrapPaginator->sort('email');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('created');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('modified');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('file');?></th>
 				<th class="actions"><?php echo __('Actions');?></th>
 			</tr>
 		<?php foreach ($users as $user): ?>
@@ -32,6 +33,7 @@
 				<td><?php echo h($user['User']['email']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['created']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['modified']); ?>&nbsp;</td>
+				<td><?php echo h($user['User']['file']); ?>&nbsp;</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
 					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>

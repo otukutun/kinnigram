@@ -9,7 +9,7 @@
 			</dd>
 			<dt><?php echo __('Category'); ?></dt>
 			<dd>
-				<?php echo $this->Html->link($kintore['Category']['id'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
+				<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
 				&nbsp;
 			</dd>
 			<dt><?php echo __('Category'); ?></dt>
@@ -30,6 +30,11 @@
 			<dt><?php echo __('Modified'); ?></dt>
 			<dd>
 				<?php echo h($kintore['Kintore']['modified']); ?>
+				&nbsp;
+			</dd>
+			<dt><?php echo __('File'); ?></dt>
+			<dd>
+				<?php echo h($kintore['Kintore']['file']); ?>
 				&nbsp;
 			</dd>
 		</dl>

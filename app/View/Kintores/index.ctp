@@ -14,18 +14,20 @@
 				<th><?php echo $this->BootstrapPaginator->sort('nice_sum');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('created');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('modified');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('file');?></th>
 				<th class="actions"><?php echo __('Actions');?></th>
 			</tr>
 		<?php foreach ($kintores as $kintore): ?>
 			<tr>
 				<td><?php echo h($kintore['Kintore']['id']); ?>&nbsp;</td>
 				<td>
-					<?php echo $this->Html->link($kintore['Category']['id'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
+					<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
 				</td>
 				<td><?php echo h($kintore['Kintore']['category']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['created']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['modified']); ?>&nbsp;</td>
+				<td><?php echo h($kintore['Kintore']['file']); ?>&nbsp;</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('View'), array('action' => 'view', $kintore['Kintore']['id'])); ?>
 					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $kintore['Kintore']['id'])); ?>

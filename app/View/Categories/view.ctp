@@ -7,6 +7,11 @@
 				<?php echo h($category['Category']['id']); ?>
 				&nbsp;
 			</dd>
+			<dt><?php echo __('Name'); ?></dt>
+			<dd>
+				<?php echo h($category['Category']['name']); ?>
+				&nbsp;
+			</dd>
 		</dl>
 	</div>
 	<div class="span3">
@@ -36,6 +41,7 @@
 				<th><?php echo __('Nice Sum'); ?></th>
 				<th><?php echo __('Created'); ?></th>
 				<th><?php echo __('Modified'); ?></th>
+				<th><?php echo __('File'); ?></th>
 				<th class="actions"><?php echo __('Actions');?></th>
 			</tr>
 		<?php foreach ($category['Kintore'] as $kintore): ?>
@@ -46,6 +52,7 @@
 				<td><?php echo $kintore['nice_sum'];?></td>
 				<td><?php echo $kintore['created'];?></td>
 				<td><?php echo $kintore['modified'];?></td>
+				<td><?php echo $kintore['file'];?></td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('View'), array('controller' => 'kintores', 'action' => 'view', $kintore['id'])); ?>
 					<?php echo $this->Html->link(__('Edit'), array('controller' => 'kintores', 'action' => 'edit', $kintore['id'])); ?>

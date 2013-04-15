@@ -11,6 +11,7 @@
 				echo $this->BootstrapForm->input('detail');
 				echo $this->BootstrapForm->input('age');
 				echo $this->BootstrapForm->input('email');
+				echo $this->BootstrapForm->input('file');
 				echo $this->BootstrapForm->hidden('id');
 				?>
 				<?php echo $this->BootstrapForm->submit(__('Submit'));?>

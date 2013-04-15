@@ -52,6 +52,11 @@
 				<?php echo h($user['User']['modified']); ?>
 				&nbsp;
 			</dd>
+			<dt><?php echo __('File'); ?></dt>
+			<dd>
+				<?php echo h($user['User']['file']); ?>
+				&nbsp;
+			</dd>
 		</dl>
 	</div>
 	<div class="span3">
