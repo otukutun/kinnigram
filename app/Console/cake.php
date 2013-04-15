@@ -26,7 +26,15 @@ if (function_exists('ini_set')) {
 
 	// the following line differs from its sibling
 	// /lib/Cake/Console/Templates/skel/Console/cake.php
-	ini_set('include_path', $root . $ds . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+	//ini_set('include_path', $root . $ds . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+	ini_set('include_path', $root . $ds . 'cakephp' . $ds . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+}
+
+// for managing cakephp's core-code by git-submodule
+$idx = array_search('-app',$argv);
+if ($idx === false) {
+	$argv[] = '-app';
+	$argv[] = $root . $ds .'app';
 }
 
 if (!include($dispatcher)) {
