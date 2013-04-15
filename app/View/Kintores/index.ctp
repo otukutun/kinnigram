@@ -27,7 +27,7 @@
 				<td><?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['created']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['modified']); ?>&nbsp;</td>
-				<td><?php echo h($kintore['Kintore']['file']); ?>&nbsp;</td>
+				<td><?php echo $this->Html->image($kintore['Kintore']['file']); ?>&nbsp;</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('View'), array('action' => 'view', $kintore['Kintore']['id'])); ?>
 					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $kintore['Kintore']['id'])); ?>

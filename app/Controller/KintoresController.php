@@ -58,13 +58,7 @@ class KintoresController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
                 $this->Kintore->create();
-                if (is_uploaded_file($this->request->data['Kintore']['file']['tmp_name'])) {//ファイルのアップロード処理
-                    $file = $this->request->data['Kintore']['file'];
-		    $file['name'] = time() . substr(strrchr($file['name'],'.'),1);
-		    $file_path = 'kintores' . DS . $file['name'];
-                    move_uploaded_file($file['tmp_name'],$file_path);
-                    $this->request->data['Kintore']['file'] = $file_path;
-                }
+                $this->request->data['Kintore']['file'] = $this->Kintore->fileupload($this->request->data['Kintore']['file']);
 
 			if ($this->Kintore->save($this->request->data)) {
 				$this->Session->setFlash(
