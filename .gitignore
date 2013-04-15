@@ -9,7 +9,7 @@
 /build
 /dist
 /tags
-
+#/app/webroot/kintores/*
 # OS generated files #
 ######################
 .DS_Store
