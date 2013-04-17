@@ -53,6 +53,12 @@
 					<ul class="nav">
 						<li class="active"><a href="#">ホーム</a></li>
 						<li><a href="#contact">詳しく</a></li>
+                        <li><?php if ($this->Session->check('Auth.User')): ?>
+<?php $use = $this->Session->read('Auth.User'); ?>
+<img src="https://api.twitter.com/1/users/profile_image?screen_name=<?php echo $use['User']['username'];?>&amp;size=mini" />
+        <?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?>
+    </span>
+<?php endif ; ?></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>

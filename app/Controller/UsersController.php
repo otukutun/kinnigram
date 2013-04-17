@@ -12,20 +12,43 @@ class UsersController extends AppController {
  *
  * @var string
  */
-	public $layout = 'bootstrap';
+	//public $layout = 'bootstrap';
 
 /**
  * Helpers
  *
  * @var array
  */
-	public $helpers = array('TwitterBootstrap.BootstrapHtml', 'TwitterBootstrap.BootstrapForm', 'TwitterBootstrap.BootstrapPaginator');
+	//public $helpers = array('TwitterBootstrap.BootstrapHtml', 'TwitterBootstrap.BootstrapForm', 'TwitterBootstrap.BootstrapPaginator');
 /**
  * Components
  *
  * @var array
  */
-	public $components = array('Session');
+
+    public function beforeFilter() {
+            parent::beforeFilter();
+            $this->Auth->allow('twitter_login','login','oauth_callback');
+    }
+
+    public function twitter_login() {
+            //Configure::write('debug',0);
+            //$this->layout = 'ajax';
+            //$this->Twitter->setTwitterSource('twitter');
+            //pr($this->Twitter->getAuthenticateUrl(null,true));
+            $this->redirect($this->Twitter->getAuthenticateUrl(null,true));
+    }
+
+    public function login() {
+    }
+
+    public function logout() {
+            $this->Session->destroy();
+            $this->Session->setFlash(__('signed out'));
+            $this->Session->delete($this->Auth->sessionKey);
+            $this->redirect($this->Auth->logoutRedirect);
+    }
+	//public $components = array('Session');
 /**
  * index method
  *
@@ -34,7 +57,47 @@ class UsersController extends AppController {
 	public function index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
-	}
+    }
+
+    public function oauth_callback() {
+
+            if (!$this->Twitter->isRequested()) {
+                    $this->flash(__('invalid access'), '/',5);
+                    return;
+            }
+
+            //アクセストークンの取得
+            $this->Twitter->setTwitterSource('twitter');
+            $token = $this->Twitter->getAccessToken();
+
+            //アクセストークンを正しく取得できなかった場合の処理
+            if (is_string($token)) {
+                    $this->flash(__('fail get access token.') . $token, '/', 5);
+                    return;
+            }
+
+            //以上のifに一致しなかった場合は正しく処理されたものとして扱い
+            //$data['User']に情報を設定する
+            $data['User'] = array(
+                    'id' => $token['user_id'],
+                    'username' => $token['screen_name'],
+                    'password' => Security::hash($token['oauth_token']),
+                    'oauth_token' => $token['oauth_token'],
+                    'oauth_token_secret' => $token['oauth_token_secret'],
+            );
+
+            //設定したトークンをusersテーブルに書き込む処理と、失敗した場合の処理
+            if (!$this->User->save($data)) {
+                    $this->flash(__('user not saved.'), 'login',5);
+                    return;
+            }
+            //認証およびusersテーブルへの書き込みが完了したので、
+            //CakePHPサービス自信へのログインを実施し、ログイン完了後の画面にリダイレクト
+            $this->Auth->login($data);
+            $this->redirect($this->Auth->loginRedirect);
+
+
+    }
 
 /**
  * view method

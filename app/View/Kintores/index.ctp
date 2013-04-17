@@ -1,21 +1,20 @@
 <div class="row-fluid">
 	<div class="span9">
-		<h2><?php echo __('List %s', __('Kintores'));?></h2>
+		<h2><?php echo '投稿一覧';?></h2>
 
 		<p>
-			<?php echo $this->BootstrapPaginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')));?>
+			<?php //echo $this->BootstrapPaginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')));?>
 		</p>
 
 		<table class="table">
 			<tr>
-				<th><?php echo $this->BootstrapPaginator->sort('id');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('category_id');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('category');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('nice_sum');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('created');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('modified');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('file');?></th>
-				<th class="actions"><?php echo __('Actions');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('id','投稿ID');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('category_id','カテゴリ');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('nice_sum','いいね');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('created','投稿日');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('modified','編集日');?></th>
+				<th><?php echo $this->BootstrapPaginator->sort('file','きんにく');?></th>
+				<th class="actions"><?php echo __('アクション');?></th>
 			</tr>
 		<?php foreach ($kintores as $kintore): ?>
 			<tr>
@@ -23,11 +22,10 @@
 				<td>
 					<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
 				</td>
-				<td><?php echo h($kintore['Kintore']['category']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['created']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['modified']); ?>&nbsp;</td>
-				<td><?php echo $this->Html->image('musules' . DS . $kintore['Kintore']['file']); ?>&nbsp;</td>
+				<td><?php echo $this->Html->image('thumbnails' . DS . $kintore['Kintore']['file']); ?>&nbsp;</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('View'), array('action' => 'view', $kintore['Kintore']['id'])); ?>
 					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $kintore['Kintore']['id'])); ?>
