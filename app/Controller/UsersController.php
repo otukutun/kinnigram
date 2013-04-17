@@ -28,15 +28,33 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
             parent::beforeFilter();
-            //$this->Auth->allow('twitter_login','login','oauth_callback');
+            $this->Auth->allow('twitter_login','login','callback');
     }
 
     public function twitter_login() {
+            $requestToken = $this->OAuthConsumer->getRequestToken('Twitter','https://api.twitter.com/oauth/request_token','http://'. FULL_BASE_URL . '/nomado/users/callback');
+            debug($requestToken);
+            if ($requestToken) {
+                $this->Session->write('twitter_request_token',$requestToken);
+                $this->redirect('https://api.twitter.com/oauth/authorize' . $requestToken->key);
+            } else {
+                    $this->Session->setFlash(__('signed out'));
+                    //$this->redirect(array('controller' => 'users','action' => 'login'));
+            }
+
             //Configure::write('debug',0);
             //$this->layout = 'ajax';
             //$this->Twitter->setTwitterSource('twitter');
             //pr($this->Twitter->getAuthenticateUrl(null,true));
             //$this->redirect($this->Twitter->getAuthenticateUrl(null,true));
+    }
+
+    public function callback() {
+            $requestToken = $this->Session->read('twitter_request_token');
+            $accessToken = $this->OAuthConsumer->getAccessToken('Twitter','https://api.twitter.com/oauth/access_token',$requestToken);
+
+            if ($accessToken) {
+            }
     }
 
     public function login() {
