@@ -10,6 +10,7 @@
 /dist
 /tags
 app/webroot/img/musules
+app/webroot/img/thumbnails
 #/app/webroot/kintores/*
 # OS generated files #
 ######################
