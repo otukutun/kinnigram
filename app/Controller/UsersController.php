@@ -28,7 +28,7 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
             parent::beforeFilter();
-            $this->Auth->allow('twitter_login','login','oauth_callback');
+            //$this->Auth->allow('twitter_login','login','oauth_callback');
     }
 
     public function twitter_login() {
@@ -36,17 +36,17 @@ class UsersController extends AppController {
             //$this->layout = 'ajax';
             //$this->Twitter->setTwitterSource('twitter');
             //pr($this->Twitter->getAuthenticateUrl(null,true));
-            $this->redirect($this->Twitter->getAuthenticateUrl(null,true));
+            //$this->redirect($this->Twitter->getAuthenticateUrl(null,true));
     }
 
     public function login() {
     }
 
     public function logout() {
-            $this->Session->destroy();
+            /*$this->Session->destroy();
             $this->Session->setFlash(__('signed out'));
             $this->Session->delete($this->Auth->sessionKey);
-            $this->redirect($this->Auth->logoutRedirect);
+            $this->redirect($this->Auth->logoutRedirect);*/
     }
 	//public $components = array('Session');
 /**
@@ -59,7 +59,7 @@ class UsersController extends AppController {
 		$this->set('users', $this->paginate());
     }
 
-    public function oauth_callback() {
+    /*public function oauth_callback() {
 
             if (!$this->Twitter->isRequested()) {
                     $this->flash(__('invalid access'), '/',5);
@@ -97,7 +97,7 @@ class UsersController extends AppController {
             $this->redirect($this->Auth->loginRedirect);
 
 
-    }
+    }*/
 
 /**
  * view method
