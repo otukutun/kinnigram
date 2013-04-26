@@ -27,9 +27,11 @@
 				<td><?php //echo h($kintore['Kintore']['modified']); ?>&nbsp;</td>
 				<td><?php echo $this->Html->image('thumbnails' . DS . $kintore['Kintore']['file']); ?>&nbsp;</td>
 				<td class="actions">
-					<?php echo $this->Html->link(__('View'), array('action' => 'view', $kintore['Kintore']['id'])); ?>
-					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $kintore['Kintore']['id'])); ?>
-					<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $kintore['Kintore']['id']), null, __('Are you sure you want to delete # %s?', $kintore['Kintore']['id'])); ?>
+                    <?php echo $this->Html->link(__('詳細'), array('action' => 'view', $kintore['Kintore']['id'])); ?>
+                    <?php if($this->Kintore->actionView($user['id'],$kintore['Kintore']['user_id'])): ?>
+					<?php echo $this->Html->link(__('編集'), array('action' => 'edit', $kintore['Kintore']['id'])); ?>
+                    <?php echo $this->Form->postLink(__('削除'), array('action' => 'delete', $kintore['Kintore']['id']), null, __('Are you sure you want to delete # %s?', $kintore['Kintore']['id'])); ?>
+                    <?php endif; ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
