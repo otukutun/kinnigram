@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Vendor', 'OAuth/OAuthClient');
 /**
  * Users Controller
  *
@@ -32,28 +33,55 @@ class UsersController extends AppController {
     }
 
     public function twitter_login() {
-            $requestToken = $this->OAuthConsumer->getRequestToken('Twitter','https://api.twitter.com/oauth/request_token','http://'. FULL_BASE_URL . '/nomado/users/callback');
+            $client = $this->createClient();
+            //$requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', 'http://' . $_SERVER['HTTP_HOST'] . '/nomado/users/callback');
+            //$client = $this->createClient();
+            $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/nomado/users/callback');
             debug($requestToken);
             if ($requestToken) {
                 $this->Session->write('twitter_request_token',$requestToken);
-                $this->redirect('https://api.twitter.com/oauth/authorize' . $requestToken->key);
+                $this->redirect('https://api.twitter.com/oauth/authorize?oauth_token=' . $requestToken->key);
             } else {
                     $this->Session->setFlash(__('signed out'));
-                    //$this->redirect(array('controller' => 'users','action' => 'login'));
+                    $this->redirect(array('controller' => 'users','action' => 'login'));
             }
 
             //Configure::write('debug',0);
             //$this->layout = 'ajax';
-            //$this->Twitter->setTwitterSource('twitter');
-            //pr($this->Twitter->getAuthenticateUrl(null,true));
-            //$this->redirect($this->Twitter->getAuthenticateUrl(null,true));
     }
 
     public function callback() {
             $requestToken = $this->Session->read('twitter_request_token');
-            $accessToken = $this->OAuthConsumer->getAccessToken('Twitter','https://api.twitter.com/oauth/access_token',$requestToken);
+            $client = $this->createClient();
+            $accessToken = $client->getAccessToken('https://api.twitter.com/oauth/access_token',$requestToken);
 
             if ($accessToken) {
+                    debug($accessToken);
+                    $user_json = $client->get($accessToken->key, $accessToken->secret,'https://api.twitter.com/1.1/account/verify_credentials.json');
+                    $user = json_decode($user_json, true);
+
+                    if ($user) {
+                            $this->User->twitterUpdate(array(
+                                                        'twitter_id' => $user['id_str'],
+                                                        'username' => $user['screen_name'],
+                                                        'oauth_token' => $accessToken->key,
+                                                        'oauth_token_secret' => $accessToken->secret,
+                                                        'file' => $user['profile_image_url'],
+                                                ));
+                            $auth = array('User' => array('oauth_token' => $accessToken->key,
+                                    'oauth_token_secret' => $accessToken->secret,
+                            ));
+
+                            if ($this->Auth->login($auth)) {
+                                    $this->redirect($this->Auth->redirect());
+                            } /*else {
+                                    $this->redirect(array('controller' => 'users','action' => 'login'));
+                            }*/
+                    } /*else {
+                                    $this->redirect(array('controller' => 'users','action' => 'login'));
+                    } */
+
+                    //debug($user);
             }
     }
 
@@ -61,10 +89,10 @@ class UsersController extends AppController {
     }
 
     public function logout() {
-            /*$this->Session->destroy();
+            $this->Session->destroy();
             $this->Session->setFlash(__('signed out'));
             $this->Session->delete($this->Auth->sessionKey);
-            $this->redirect($this->Auth->logoutRedirect);*/
+            $this->redirect($this->Auth->logoutRedirect);
     }
 	//public $components = array('Session');
 /**
@@ -233,5 +261,9 @@ class UsersController extends AppController {
 			)
 		);
 		$this->redirect(array('action' => 'index'));
-	}
+    }
+
+    private function createClient() {
+            return new OAuthClient('Ec5mcESyv0AhWrc46GbHrg', 'PFX8NjtBS1XdLuuHIhQ4TGFLH8NHzhP5ijWS8UK0Js');
+    }
 }

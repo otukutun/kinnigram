@@ -17,14 +17,14 @@
 				<?php echo h($user['User']['twitter_id']); ?>
 				&nbsp;
 			</dd>
-			<dt><?php echo __('Access Token'); ?></dt>
+			<dt><?php //echo __('Access Token'); ?></dt>
 			<dd>
-				<?php echo h($user['User']['access_token']); ?>
+				<?php //echo h($user['User']['access_token']); ?>
 				&nbsp;
 			</dd>
-			<dt><?php echo __('Access Token Secret'); ?></dt>
+			<dt><?php //echo __('Access Token Secret'); ?></dt>
 			<dd>
-				<?php echo h($user['User']['access_token_secret']); ?>
+				<?php //echo h($user['User']['access_token_secret']); ?>
 				&nbsp;
 			</dd>
 			<dt><?php echo __('Detail'); ?></dt>
@@ -42,14 +42,14 @@
 				<?php echo h($user['User']['email']); ?>
 				&nbsp;
 			</dd>
-			<dt><?php echo __('Created'); ?></dt>
+			<dt><?php //echo __('Created'); ?></dt>
 			<dd>
-				<?php echo h($user['User']['created']); ?>
+				<?php //echo h($user['User']['created']); ?>
 				&nbsp;
 			</dd>
-			<dt><?php echo __('Modified'); ?></dt>
+			<dt><?php //echo __('Modified'); ?></dt>
 			<dd>
-				<?php echo h($user['User']['modified']); ?>
+				<?php //echo h($user['User']['modified']); ?>
 				&nbsp;
 			</dd>
 			<dt><?php echo __('File'); ?></dt>

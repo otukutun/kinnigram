@@ -11,8 +11,8 @@
 				<th><?php echo $this->BootstrapPaginator->sort('id');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('username');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('twitter_id');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('access_token');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('access_token_secret');?></th>
+				<th><?php //echo $this->BootstrapPaginator->sort('access_token');?></th>
+				<th><?php //echo $this->BootstrapPaginator->sort('access_token_secret');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('detail');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('age');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('email');?></th>
@@ -26,8 +26,8 @@
 				<td><?php echo h($user['User']['id']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['twitter_id']); ?>&nbsp;</td>
-				<td><?php echo h($user['User']['access_token']); ?>&nbsp;</td>
-				<td><?php echo h($user['User']['access_token_secret']); ?>&nbsp;</td>
+				<td><?php //echo h($user['User']['access_token']); ?>&nbsp;</td>
+				<td><?php //echo h($user['User']['access_token_secret']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['detail']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['age']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['email']); ?>&nbsp;</td>

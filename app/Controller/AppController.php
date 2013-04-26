@@ -21,6 +21,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('Controller', 'Controller');
+//App::import('Vendor', 'OAuth/OAuthClient');
 
 /**
  * Application Controller
@@ -32,7 +33,7 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-        public $components = array('DebugKit.Toolbar','Session','Auth','OAuthConsumer'/*,'TwitterKit.Twitter'*/);
+        public $components = array('DebugKit.Toolbar','Session','Auth'/*,'OAuthConsumer'/*,'TwitterKit.Twitter'*/);
         public $helpers = array('Session','Html','Form','TwitterBootstrap.BootstrapHtml', 'TwitterBootstrap.BootstrapForm', 'TwitterBootstrap.BootstrapPaginator');
         public $layout = 'bootstrap';
         /**
@@ -44,6 +45,7 @@ class AppController extends Controller {
         public function beforeFilter() {
                 $this->Auth->userModel = 'User';
                 $this->Auth->sessionKey = 'Auth.User';
+                $this->Auth->fields = array('username' => 'oauth_token', 'password' => 'oauth_token_secret');
                 $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
                 $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
                 $this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'index');

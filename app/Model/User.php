@@ -122,6 +122,17 @@ class User extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		)
-	);
+);
+
+    public function twitterUpdate($user) {
+            $new_user = $this->find('first',array('conditions' => array('twitter_id' => $user['twitter_id'])));
+
+            if ($new_user) {
+                    $user['id'] = $new_user['User']['id'];
+            }
+            $this->create();
+            $this->save(array('User' => $user));
+                    
+    }
 
 }
