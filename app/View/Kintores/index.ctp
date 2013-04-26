@@ -8,23 +8,23 @@
 
 		<table class="table">
 			<tr>
-				<th><?php echo $this->BootstrapPaginator->sort('id','投稿ID');?></th>
+				<th><?php //echo $this->BootstrapPaginator->sort('id','投稿ID');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('category_id','カテゴリ');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('nice_sum','いいね');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('created','投稿日');?></th>
-				<th><?php echo $this->BootstrapPaginator->sort('modified','編集日');?></th>
+				<th><?php //echo $this->BootstrapPaginator->sort('modified','編集日');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('file','きんにく');?></th>
 				<th class="actions"><?php echo __('アクション');?></th>
 			</tr>
 		<?php foreach ($kintores as $kintore): ?>
 			<tr>
-				<td><?php echo h($kintore['Kintore']['id']); ?>&nbsp;</td>
+				<td><?php //echo h($kintore['Kintore']['id']); ?>&nbsp;</td>
 				<td>
 					<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
 				</td>
 				<td><?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;</td>
 				<td><?php echo h($kintore['Kintore']['created']); ?>&nbsp;</td>
-				<td><?php echo h($kintore['Kintore']['modified']); ?>&nbsp;</td>
+				<td><?php //echo h($kintore['Kintore']['modified']); ?>&nbsp;</td>
 				<td><?php echo $this->Html->image('thumbnails' . DS . $kintore['Kintore']['file']); ?>&nbsp;</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('View'), array('action' => 'view', $kintore['Kintore']['id'])); ?>

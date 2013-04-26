@@ -57,6 +57,8 @@ class KintoresController extends AppController {
  */
 	public function add() {
             if ($this->request->is('post')) {
+                    $user = $this->Session->read('user');
+                    $this->request->data['Kintore']['user_id'] = $user['id'];
                     $this->Kintore->create();
                     $this->request->data['Kintore']['file'] = $this->Kintore->fileUpload($this->request->data['Kintore']['file']);
 

@@ -57,7 +57,9 @@ class NicesController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$this->Nice->create();
+                $this->Nice->create();
+                //$user = $this->Session->read('user');
+                //$this->request->data['Kintore']['user_id'] = $user['id'];
 			if ($this->Nice->save($this->request->data)) {
 				$this->Session->setFlash(
 					__('The %s has been saved', __('nice')),

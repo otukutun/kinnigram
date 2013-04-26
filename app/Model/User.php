@@ -131,8 +131,7 @@ class User extends AppModel {
                     $user['id'] = $new_user['User']['id'];
             }
             $this->create();
-            $this->save(array('User' => $user));
-                    
+            return $this->save(array('User' => $user));
     }
 
 }

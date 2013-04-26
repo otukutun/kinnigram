@@ -34,8 +34,6 @@ class UsersController extends AppController {
 
     public function twitter_login() {
             $client = $this->createClient();
-            //$requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', 'http://' . $_SERVER['HTTP_HOST'] . '/nomado/users/callback');
-            //$client = $this->createClient();
             $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/nomado/users/callback');
             debug($requestToken);
             if ($requestToken) {
@@ -46,8 +44,6 @@ class UsersController extends AppController {
                     $this->redirect(array('controller' => 'users','action' => 'login'));
             }
 
-            //Configure::write('debug',0);
-            //$this->layout = 'ajax';
     }
 
     public function callback() {
@@ -61,7 +57,7 @@ class UsersController extends AppController {
                     $user = json_decode($user_json, true);
 
                     if ($user) {
-                            $this->User->twitterUpdate(array(
+                            $user_id = $this->User->twitterUpdate(array(
                                                         'twitter_id' => $user['id_str'],
                                                         'username' => $user['screen_name'],
                                                         'oauth_token' => $accessToken->key,
@@ -73,6 +69,7 @@ class UsersController extends AppController {
                             ));
 
                             if ($this->Auth->login($auth)) {
+                                    $this->Session->write('user',$user_id['User']);
                                     $this->redirect($this->Auth->redirect());
                             } /*else {
                                     $this->redirect(array('controller' => 'users','action' => 'login'));
