@@ -25,6 +25,8 @@ class NicesController extends AppController {
  *
  * @var array
  */
+
+        public $uses = array('Nice','User','Kintore','Category');
 	//public $components = array('Session');
 /**
  * index method
@@ -55,30 +57,34 @@ class NicesController extends AppController {
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post')) {
-                $this->Nice->create();
-                //$user = $this->Session->read('user');
-                //$this->request->data['Kintore']['user_id'] = $user['id'];
-			if ($this->Nice->save($this->request->data)) {
+	public function add($kintore_id = null) {
+            if ($this->request->is('post')) {
+                $user = $this->Session->read('user');
+                $saved = $this->Nice->addNice($kintore_id,$user['id']);
+                if ($saved) {
+                        
+                        $this->Kintore->create();
+                        $this->Kintore->save(array('Kintore' => array('id' => $kintore_id, 'nice_sum' => $this->Nice->find('count',array('conditions' => array('Nice.kintore_id' => $kintore_id))))));
+
 				$this->Session->setFlash(
-					__('The %s has been saved', __('nice')),
+					__('いいねしました'),
 					'alert',
 					array(
 						'plugin' => 'TwitterBootstrap',
 						'class' => 'alert-success'
 					)
 				);
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('controller' => 'kintores','action' => 'index'));
 			} else {
 				$this->Session->setFlash(
-					__('The %s could not be saved. Please, try again.', __('nice')),
+					__('既にいいねしています'),
 					'alert',
 					array(
 						'plugin' => 'TwitterBootstrap',
 						'class' => 'alert-error'
 					)
 				);
+				$this->redirect(array('controller' => 'kintores','action' => 'index'));
 			}
 		}
 		$kintores = $this->Nice->Kintore->find('list');

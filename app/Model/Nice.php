@@ -31,5 +31,23 @@ class Nice extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
-	);
-}
+);
+
+    public function addNice($kintore_id = null,$user_id = null) {//いいねを追加
+            if ($kintore_id && $user_id) {
+                    $nice = $this->find('first',array('conditions' => array('Nice.kintore_id' => $kintore_id, 'Nice.user_id' => $user_id)));
+
+                    if ($nice) {//既に登録されていた場合
+                            return false;
+                    } else {//始めてのばあい
+                            $this->create();
+                            $this->save(array('Nice' => array('kintore_id' => $kintore_id,
+                                                              'user_id' => $user_id,
+                                                      )));
+                            return true;
+                    }
+                    return false;
+            }
+
+    }//end_function_addNice
+}//endclass
