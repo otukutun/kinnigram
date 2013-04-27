@@ -47,8 +47,9 @@ class AppController extends Controller {
                 $this->Auth->sessionKey = 'Auth.User';
                 $this->Auth->fields = array('username' => 'oauth_token', 'password' => 'oauth_token_secret');
                 $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
-                $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
+                //$this->Auth->loginRedirect = array('controller' => 'kintores', 'action' => 'index');
                 $this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'index');
+                //$this->Auth->loginRedirect = array('controller' => 'kintores', 'action' => 'index');
 
         }//endfunction_beforeFilter
 

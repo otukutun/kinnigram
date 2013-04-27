@@ -19,7 +19,7 @@
 				<th><?php echo $this->BootstrapPaginator->sort('created','作成日');?></th>
 				<th><?php //echo $this->BootstrapPaginator->sort('modified');?></th>
 				<th><?php echo $this->BootstrapPaginator->sort('file','画像');?></th>
-				<th class="actions"><?php echo __('Actions');?></th>
+				<th class="actions"><?php echo __('アクション');?></th>
 			</tr>
 		<?php foreach ($users as $user): ?>
 			<tr>
@@ -35,24 +35,14 @@
 				<td><?php //echo h($user['User']['modified']); ?>&nbsp;</td>
 				<td><?php echo h($user['User']['file']); ?>&nbsp;</td>
 				<td class="actions">
-					<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
-					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>
-					<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
+					<?php echo $this->Html->link(__('詳細'), array('action' => 'view', $user['User']['id'])); ?>
+					<?php echo $this->Html->link(__('編集'), array('action' => 'edit', $user['User']['id'])); ?>
+					<?php //echo $this->Form->postLink(__('削除'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
 		</table>
 
 		<?php echo $this->BootstrapPaginator->pagination(); ?>
-	</div>
-	<div class="span3">
-		<div class="well" style="padding: 8px 0; margin-top:8px;">
-		<ul class="nav nav-list">
-			<li class="nav-header"><?php echo __('Actions'); ?></li>
-			<li><?php echo $this->Html->link(__('New %s', __('User')), array('action' => 'add')); ?></li>
-			<li><?php echo $this->Html->link(__('List %s', __('Nices')), array('controller' => 'nices', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New %s', __('Nice')), array('controller' => 'nices', 'action' => 'add')); ?> </li>
-		</ul>
-		</div>
 	</div>
 </div>

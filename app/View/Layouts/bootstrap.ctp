@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>
-		<?php echo __('test'); ?>
+		<?php echo __('きんにぐらむ'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,9 +51,11 @@
 				<a class="brand" href="#"><?php echo __('きんにぐらむ'); ?></a>
 				<div class="nav-collapse">
 					<ul class="nav">
-						<li class="active"><a href="#">ホーム</a></li>
-						<li><a href="#contact">詳しく</a></li>
-                        <li><?php if ($this->Session->check('Auth.User')): ?>
+                        <?php if ($this->Session->check('Auth.User')): ?>
+                        <li class="active"><?php echo $this->Html->link(__('ホーム'), array('controller' => 'kintores', 'action' => 'index')); ?></li>
+                        <li><?php echo $this->Html->link(__('投稿'), array('controller' => 'kintores', 'action' => 'add')); ?></li>
+                        <li><?php echo $this->Html->link(__('ユーザ一覧'), array('controller' => 'users', 'action' => 'index')); ?></li>
+                        <li>
         <?php echo $this->Html->link(__('ログアウト'), array('controller' => 'users', 'action' => 'logout')); ?>
 <?php endif ; ?></li>
 					</ul>

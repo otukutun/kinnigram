@@ -70,7 +70,7 @@ class UsersController extends AppController {
 
                             if ($this->Auth->login($auth)) {
                                     $this->Session->write('user',$user_id['User']);
-                                    $this->redirect($this->Auth->redirect());
+                                    $this->redirect(array('controller' => 'kintores','action' => 'index'));
                             } /*else {
                                     $this->redirect(array('controller' => 'users','action' => 'login'));
                             }*/
@@ -78,7 +78,6 @@ class UsersController extends AppController {
                                     $this->redirect(array('controller' => 'users','action' => 'login'));
                     } */
 
-                    //debug($user);
             }
     }
 
@@ -91,7 +90,6 @@ class UsersController extends AppController {
             $this->Session->delete($this->Auth->sessionKey);
             $this->redirect($this->Auth->logoutRedirect);
     }
-	//public $components = array('Session');
 /**
  * index method
  *

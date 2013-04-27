@@ -1,5 +1,5 @@
 <div class="row-fluid">
-	<div class="span9">
+	<div class="span12">
 		<h2><?php echo '投稿一覧';?></h2>
 
 		<p>
@@ -43,17 +43,5 @@
 		</table>
 
 		<?php echo $this->BootstrapPaginator->pagination(); ?>
-	</div>
-	<div class="span3">
-		<div class="well" style="padding: 8px 0; margin-top:8px;">
-		<ul class="nav nav-list">
-			<li class="nav-header"><?php echo __('Actions'); ?></li>
-			<li><?php echo $this->Html->link(__('New %s', __('Kintore')), array('action' => 'add')); ?></li>
-			<li><?php echo $this->Html->link(__('List %s', __('Categories')), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New %s', __('Category')), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-			<li><?php echo $this->Html->link(__('List %s', __('Nices')), array('controller' => 'nices', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New %s', __('Nice')), array('controller' => 'nices', 'action' => 'add')); ?> </li>
-		</ul>
-		</div>
 	</div>
 </div>
