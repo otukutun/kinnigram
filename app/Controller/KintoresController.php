@@ -7,6 +7,9 @@ App::uses('AppController', 'Controller');
  */
 class KintoresController extends AppController {
 
+        public $paginate = array(
+                'limit' => 12);
+
 /**
  *  Layout
  *
