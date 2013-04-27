@@ -26,7 +26,7 @@
 					<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
 				</td>
 				<td><?php //echo h($kintore['Kintore']['modified']); ?>&nbsp;</td>
-				<td><?php echo h($kintore['User']['username']); ?>&nbsp;</td>
+				<td><?php echo $this->Html->image($kintore['User']['file']); ?><?php echo h($kintore['User']['username']); ?>&nbsp;</td>
                 <td>
                     <?php echo $this->Form->postLink(__('いいね'), array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), null); ?>
                 <?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;

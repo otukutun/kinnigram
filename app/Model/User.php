@@ -127,11 +127,20 @@ class User extends AppModel {
     public function twitterUpdate($user) {
             $new_user = $this->find('first',array('conditions' => array('twitter_id' => $user['twitter_id'])));
 
-            if ($new_user) {
+            if ($new_user) {//既にユーザ登録されていた場合
                     $user['id'] = $new_user['User']['id'];
+                    $image = file_get_contents($user['file']);
+                    $image_type = substr(strrchr($user['file'],'.'),1);
+                    file_put_contents(IMAGES . 'icons' . DS . $user['twitter_id'] . '.' . $image_type,$image);
+                    $user['file'] = 'icons' . DS . $user['twitter_id'] . '.' . $image_type;
+            } else {//新規登録の場合の処理
+                    $image = file_get_contents($user['file']);
+                    $image_type = substr(strrchr($user['file'],'.'),1);
+                    file_put_contents(IMAGES . 'icons' . DS . $user['twitter_id'] . '.' . $image_type,$image);
+                    $user['file'] = 'icons' . DS . $user['twitter_id'] . '.' . $image_type;
             }
             $this->create();
             return $this->save(array('User' => $user));
-    }
+    }//end_function_twitterUpdate
 
-}
+}//endclass
