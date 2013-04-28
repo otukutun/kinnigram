@@ -34,7 +34,7 @@ class KintoresController extends AppController {
 	public function index() {
 		$this->Kintore->recursive = 0;
         $this->set('kintores', $this->paginate());
-        $this->set('user',$this->Session->read('user'));
+        $this->set('auth_user',$this->Session->read('auth_user'));
 	}
 
 /**

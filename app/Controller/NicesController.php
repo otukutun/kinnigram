@@ -12,14 +12,12 @@ class NicesController extends AppController {
  *
  * @var string
  */
-	//public $layout = 'bootstrap';
 
 /**
  * Helpers
  *
  * @var array
  */
-	//public $helpers = array('TwitterBootstrap.BootstrapHtml', 'TwitterBootstrap.BootstrapForm', 'TwitterBootstrap.BootstrapPaginator');
 /**
  * Components
  *
@@ -59,8 +57,8 @@ class NicesController extends AppController {
  */
 	public function add($kintore_id = null) {
             if ($this->request->is('post')) {
-                $user = $this->Session->read('user');
-                $saved = $this->Nice->addNice($kintore_id,$user['id']);
+                $auth_user = $this->Session->read('auth_user');
+                $saved = $this->Nice->addNice($kintore_id,$auth_user['id']);
                 if ($saved) {
                         
                         $this->Kintore->create();

@@ -1,6 +1,6 @@
 <div class="row-fluid">
 	<div class="span12">
-		<h2><?php echo '投稿一覧';?></h2>
+		<h2><?php echo __('投稿一覧');?></h2>
 
 		<p>
 			<?php //echo $this->BootstrapPaginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')));?>
@@ -17,12 +17,12 @@
 </h4>
                     <span>
                     <?php echo $this->Html->image($kintore['User']['file']); ?><?php echo h($kintore['User']['username']); ?>&nbsp;
-                    <?php echo $this->Form->postLink(__('いいね'), array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), null); ?>
-                    <?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;
+                    <?php echo $this->Form->postLink('いいね', array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), null); ?>
+                    <i class='icon-thumbs-up'></i><?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;
                     </span>
                     <span>
                     <?php echo $this->Html->link(__('詳細'), array('action' => 'view', $kintore['Kintore']['id'])); ?>
-                    <?php if($this->Kintore->actionView($user['id'],$kintore['Kintore']['user_id'])): ?>
+                    <?php if($this->Html->actionView($auth_user['id'],$kintore['Kintore']['user_id'])): ?>
 					<?php echo $this->Html->link(__('編集'), array('action' => 'edit', $kintore['Kintore']['id'])); ?>
                     <?php echo $this->Form->postLink(__('削除'), array('action' => 'delete', $kintore['Kintore']['id']), null, __('Are you sure you want to delete # %s?', $kintore['Kintore']['id'])); ?>
                     <?php endif; ?>

@@ -67,7 +67,7 @@ class UsersController extends AppController {
                             ));
 
                             if ($this->Auth->login($auth)) {
-                                    $this->Session->write('user',$user_id['User']);
+                                    $this->Session->write('auth_user',$user_id['User']);
                                     $this->redirect(array('controller' => 'kintores','action' => 'index'));
                             } /*else {
                                     $this->redirect(array('controller' => 'users','action' => 'login'));
@@ -95,7 +95,8 @@ class UsersController extends AppController {
  */
 	public function index() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->paginate());
+        $this->set('users', $this->paginate());
+        $this->set('auth_user',$this->Session->read('auth_user'));
     }
 
     /*public function oauth_callback() {
@@ -193,11 +194,25 @@ class UsersController extends AppController {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid %s', __('user')));
-		}
+        }
+        $auth_user = $this->Session->read('auth_user');
+
+        if ($auth_user['id'] !== $id) {//本人か確認
+				$this->Session->setFlash(
+					__('編集できません'),
+					'alert',
+					array(
+						'plugin' => 'TwitterBootstrap',
+						'class' => 'alert-error'
+					)
+				);
+				$this->redirect(array('action' => 'index'));
+        }
+        
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(
-					__('The %s has been saved', __('user')),
+					__('ユーザ情報を編集しました。'),
 					'alert',
 					array(
 						'plugin' => 'TwitterBootstrap',
@@ -207,7 +222,7 @@ class UsersController extends AppController {
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(
-					__('The %s could not be saved. Please, try again.', __('user')),
+					__('ユーザ情報が更新されませんでした。'),
 					'alert',
 					array(
 						'plugin' => 'TwitterBootstrap',
