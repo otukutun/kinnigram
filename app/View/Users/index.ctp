@@ -22,7 +22,7 @@
 				<td><?php echo h($user['User']['created']); ?>&nbsp;</td>
                 <td class="actions">
                     <?php if($this->Html->actionView($user['User']['id'],$auth_user['id'])): ?>
-					<?php echo $this->Html->link(__('詳細'), array('action' => 'view', $user['User']['id'])); ?>
+					<?php echo $this->Html->link(__('詳細'), array('action' => 'view', $user['User']['id'])); ?> | 
                     <?php echo $this->Html->link(__('編集'), array('action' => 'edit', $user['User']['id'])); ?>
                     <?php endif; ?>
 				</td>
