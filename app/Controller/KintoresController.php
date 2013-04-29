@@ -112,6 +112,20 @@ class KintoresController extends AppController {
             if (!$this->Kintore->exists()) {
                     throw new NotFoundException(__('Invalid %s', __('kintore')));
             }
+            $accessed_user = $this->Kintore->read();
+            $auth_user = $this->Session->read('auth_user');
+            if ($auth_user['id'] !== $accessed_user['User']['id']) {//投稿者のみが編集できる
+                $this->Session->setFlash(
+					__('編集できません'),
+					'alert',
+					array(
+						'plugin' => 'TwitterBootstrap',
+						'class' => 'alert-error'
+					)
+				);
+				$this->redirect(array('action' => 'index'));
+            }
+
             if ($this->request->is('post') || $this->request->is('put')) {
                     if ($this->Kintore->save($this->request->data)) {
                             $this->Session->setFlash(
@@ -138,7 +152,7 @@ class KintoresController extends AppController {
             }
             $categories = $this->Kintore->Category->find('list');
             $this->set(compact('categories'));
-    }
+    }//end_edit_function
 
     /**
      * delete method
