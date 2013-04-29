@@ -31,7 +31,11 @@ class NicesController extends AppController {
  *
  * @return void
  */
-	public function index() {
+        public function index() {
+                $auth_user = $this->Session->read('auth_user');
+                if ($auth_user['username'] !== 'otukutun') {//アクセス拒否
+				$this->redirect(array('controller' => 'kintores','action' => 'index'));
+                }
 		$this->Nice->recursive = 0;
 		$this->set('nices', $this->paginate());
 	}
@@ -43,6 +47,10 @@ class NicesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+                $auth_user = $this->Session->read('auth_user');
+                if ($auth_user['username'] !== 'otukutun') {//アクセス拒否
+				$this->redirect(array('controller' => 'kintores','action' => 'index'));
+                }
 		$this->Nice->id = $id;
 		if (!$this->Nice->exists()) {
 			throw new NotFoundException(__('Invalid %s', __('nice')));
@@ -97,6 +105,10 @@ class NicesController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+                $auth_user = $this->Session->read('auth_user');
+                if ($auth_user['username'] !== 'otukutun') {//アクセス拒否
+				$this->redirect(array('controller' => 'kintores','action' => 'index'));
+                }
 		$this->Nice->id = $id;
 		if (!$this->Nice->exists()) {
 			throw new NotFoundException(__('Invalid %s', __('nice')));
