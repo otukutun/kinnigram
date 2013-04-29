@@ -9,9 +9,9 @@
 /build
 /dist
 /tags
-app/webroot/img/musules
-app/webroot/img/thumbnails
-app/webroot/img/icons
+app/webroot/img/musules/*
+app/webroot/img/thumbnails/*
+app/webroot/img/icons/*
 #/app/webroot/kintores/*
 # OS generated files #
 ######################
