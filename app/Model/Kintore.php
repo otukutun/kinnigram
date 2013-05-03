@@ -51,7 +51,7 @@ class Kintore extends AppModel {
                         'foreignKey' => 'kintore_id',
                         'dependent' => false,
                         'conditions' => '',
-                        'fields' => '',
+                        'fields' => array('id','user_id','kintore_id','username','created'),
                         'order' => '',
                         'limit' => '',
                         'offset' => '',
@@ -110,4 +110,4 @@ class Kintore extends AppModel {
 
         }//end_function
 
-}
+}//end_class
