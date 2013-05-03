@@ -16,31 +16,30 @@
 				&nbsp;
 			</dd>
 			<dd>
-			</dd>
+            </dd>
+            <dt></dt>
+            <dd><?php echo $this->Html->image($kintore['User']['file'],array('alt' => h($kintore['User']['username']),'url' => 'https://twitter.com/' . h($kintore['User']['username']))); ?>
+                    <?php echo $this->Html->link(h($kintore['User']['username']), 'https://twitter.com/' . h($kintore['User']['username'])); ?>&nbsp;
+                    <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],$auth_user['username']); ?>
+                    <?php if($nice_id === false): ?>
+                    <?php echo $this->Form->postLink('いいね', array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), null); ?>
+                    <?php else: ?>
+                     <!--いいねしました。-->
+                    <?php echo $this->Form->postLink('いいねを取り消す', array('controller' => 'nices', 'action' => 'delete', $nice_id), null); ?>
+                    <?php endif; ?>
+                    <br />
+                    <?php if ($kintore['Kintore']['nice_sum'] >= 1): ?>
+                    <div class='dropdown'>
+                    <?php echo $this->Html->link(h($kintore['Kintore']['nice_sum']) . '人', '#', array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>がいいねと言っています。&nbsp;
+<ul class='dropdown-menu' role='menu' target='_blank'>
+<?php foreach($kintore['Nice'] as $nice): ?>
+<li><?php echo $this->Html->link(h($nice['username']), 'https://twitter.com/' . h($nice['username'])); ?></li>
+<?php endforeach; ?>
+</ul><!-- end_ul_dropdown-menu-->
+                    </div><!--end_dropdown-menu -->
+                    <?php endif; ?>
+</dd>
 		</dl>
 	</div>
 </div>
 
-<div class="row-fluid">
-	<div class="span12">
-	<?php if (!empty($kintore['Nice'])):?>
-		<table class="table">
-			<tr>
-				<th><?php echo __('ユーザ名'); ?></th>
-				<th><?php echo __('投稿日'); ?></th>
-				<th class="actions"><?php echo __('アクション');?></th>
-			</tr>
-		<?php foreach ($kintore['Nice'] as $nice): ?>
-			<tr>
-				<td><?php echo $nice['username'];?></td>
-				<td><?php echo $nice['created'];?></td>
-				<td class="actions">
-					<?php echo $this->Form->postLink(__('削除'), array('controller' => 'nices', 'action' => 'delete', $nice['id']), null, __('Are you sure you want to delete # %s?', $nice['id'])); ?>
-				</td>
-			</tr>
-		<?php endforeach; ?>
-		</table>
-	<?php endif; ?>
-
-	</div>
-</div>

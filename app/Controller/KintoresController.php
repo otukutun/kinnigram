@@ -49,6 +49,7 @@ class KintoresController extends AppController {
 			throw new NotFoundException(__('Invalid %s', __('kintore')));
 		}
 		$this->set('kintore', $this->Kintore->read(null, $id));
+        $this->set('auth_user',$this->Session->read('auth_user'));
 	}
 
 /**
