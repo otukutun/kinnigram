@@ -20,12 +20,11 @@ class KintoreHelper extends AppHelper {
 
                     foreach($nices as $nice) {
                             if ($nice['username'] === $username) {
-                                    return true;
+                                    return $nice['id'];
                                     break;
-                            } else {
-                                    return false;
-                            }
+                            } 
                     }
+                    return false;
             }
 
 }//endclass

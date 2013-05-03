@@ -18,11 +18,12 @@
                     <span>
                     <?php echo $this->Html->image($kintore['User']['file'],array('alt' => h($kintore['User']['username']),'url' => 'https://twitter.com/' . h($kintore['User']['username']))); ?>
                     <?php echo $this->Html->link(h($kintore['User']['username']), 'https://twitter.com/' . h($kintore['User']['username'])); ?>&nbsp;
-                    <?php if(!$this->Kintore->checkNice($kintore['Nice'],$auth_user['username'])): ?>
+                    <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],$auth_user['username']); ?>
+                    <?php if($nice_id === false): ?>
                     <?php echo $this->Form->postLink('いいね', array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), null); ?>
                     <?php else: ?>
-                    既にいいねしました。
-                    <?php //echo $this->Form->postLink('いいねを取り消す', array('controller' => 'nices', 'action' => 'delete', $kintore['Kintore']['id']), null); ?>
+                     <!--いいねしました。-->
+                    <?php echo $this->Form->postLink('いいねを取り消す', array('controller' => 'nices', 'action' => 'delete', $nice_id), null); ?>
                     <?php endif; ?>
                     <?php echo $this->Html->link(__('詳細'), array('action' => 'view', $kintore['Kintore']['id'])); ?><br />
                     <?php if ($kintore['Kintore']['nice_sum'] >= 1): ?>

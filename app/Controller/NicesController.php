@@ -165,19 +165,19 @@ class NicesController extends AppController {
                                 'alert',
                                 array(
                                         'plugin' => 'TwitterBootstrap',
-                                        'class' => 'alert-success'
+                                        'class' => 'alert-error'
                                 )
                         );
-                        $this->redirect(array('action' => 'index'));
+                        $this->redirect(array('controller' => 'kintores','action' => 'index'));
                 }
                 $this->Session->setFlash(
-                        __('The %s was not deleted', __('nice')),
+                        __('いいねができませんでした。'),
                         'alert',
                         array(
                                 'plugin' => 'TwitterBootstrap',
                                 'class' => 'alert-error'
                         )
                 );
-                $this->redirect(array('action' => 'index'));
+                       $this->redirect(array('controller' => 'kintores','action' => 'index'));
         }
 }
