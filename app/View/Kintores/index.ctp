@@ -16,15 +16,15 @@
                     <span><h4>カテゴリ：<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>     <small><?php echo h($kintore['Kintore']['created']); ?>&nbsp;</small></span>
 </h4>
                     <span>
-                    <?php echo $this->Html->image($kintore['User']['file']); ?><?php echo h($kintore['User']['username']); ?>&nbsp;
+                    <?php echo $this->Html->image($kintore['User']['file'],array('alt' => h($kintore['User']['username']),'url' => 'https://twitter.com/' . h($kintore['User']['username']))); ?>
+                    <?php echo $this->Html->link(h($kintore['User']['username']), 'https://twitter.com/' . h($kintore['User']['username'])); ?>&nbsp;
                     <?php echo $this->Form->postLink('いいね', array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), null); ?>
                     <i class='icon-thumbs-up'></i><?php echo h($kintore['Kintore']['nice_sum']); ?>&nbsp;
                     </span>
                     <span>
                     <?php echo $this->Html->link(__('詳細'), array('action' => 'view', $kintore['Kintore']['id'])); ?>
                     <?php if($this->Html->actionView($auth_user['id'],$kintore['Kintore']['user_id'])): ?>
-                    |
-					<?php echo $this->Html->link(__('編集'), array('action' => 'edit', $kintore['Kintore']['id'])); ?>
+                    
                     <?php endif; ?>
 
                     </span>

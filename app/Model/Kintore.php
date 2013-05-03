@@ -94,4 +94,20 @@ class Kintore extends AppModel {
                 } //endif
                 return false;
         }//endfunction
+
+         public function updateNice($kintore_id = null,$nice_count = null) {//いいねを更新
+
+                if ($kintore_id === null) {
+                        return false;
+                }
+
+                $save_data = array('Kintore' => array('id' => $kintore_id,
+                        'nice_sum' => $nice_count,
+                ));
+                if ($this->save($save_data)) {//成功したら
+                        return true;
+                }
+
+        }//end_function
+
 }

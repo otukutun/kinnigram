@@ -17,11 +17,6 @@
 				<?php echo h($user['User']['age']); ?>
 				&nbsp;
 			</dd>
-			<dt><?php echo __('メールアドレス'); ?></dt>
-			<dd>
-				<?php echo h($user['User']['email']); ?>
-				&nbsp;
-			</dd>
 			<dt><?php echo __('登録日'); ?></dt>
 			<dd>
 				<?php echo h($user['User']['created']); ?>

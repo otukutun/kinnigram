@@ -114,6 +114,11 @@ class KintoresController extends AppController {
             }
             $accessed_user = $this->Kintore->read();
             $auth_user = $this->Session->read('auth_user');
+
+            if ($auth_user['username'] !== 'otukutun') {//ユーザアクセス拒否
+                    $this->redirect(array('controller' => 'kintores', 'action' => 'index'));
+
+            }
             if ($auth_user['id'] !== $accessed_user['User']['id']) {//投稿者のみが編集できる
                 $this->Session->setFlash(
 					__('編集できません'),
