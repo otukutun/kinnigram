@@ -37,7 +37,26 @@
                     </div><!--end_dropdown-menu -->
                     <?php endif; ?>
 </dd>
-		</dl>
-	</div>
-</div>
+        </dl>
+
+<h3>コメント</h3>
+		<?php echo $this->BootstrapForm->create('Comment', array('action' => 'add','class' => 'form-horizontal'));?>
+			<fieldset>
+				<legend><?php echo __('コメント投稿'); ?></legend>
+				<?php
+				echo $this->BootstrapForm->input('body',array('label' => 'コメント','type' => 'textarea'));
+				echo $this->BootstrapForm->input('kintore_id',array('value' => $kintore['Kintore']['id'],'type' => 'hidden'));
+				?>
+				<?php echo $this->BootstrapForm->submit(__('投稿'),array('class' => 'btn btn-primary'));?>
+			</fieldset>
+		<?php echo $this->BootstrapForm->end();?>
+
+<?php foreach($kintore['Comment'] as $comment): ?>
+投稿日:<?php echo h($comment['created']); ?>
+ユーザ名:<?php echo h($comment['username']); ?><br />
+コメント:<?php echo h($comment['body']); ?>
+<hr />
+<?php endforeach; ?>
+	</div><!-- end_span-->
+</div><!-- end_row-->
 

@@ -58,7 +58,21 @@ class Kintore extends AppModel {
                         'exclusive' => '',
                         'finderQuery' => '',
                         'counterQuery' => ''
-                )
+                ),
+                'Comment' => array(
+                        'className' => 'Comment',
+                        'foreignKey' => 'kintore_id',
+                        'dependent' => false,
+                        'conditions' => '',
+                        'fields' => array('id','user_id','kintore_id','username','created','body'),
+                        'order' => '',
+                        'limit' => '',
+                        'offset' => '',
+                        'exclusive' => '',
+                        'finderQuery' => '',
+                        'counterQuery' => ''
+                ),
+
         );
 
         public function fileUpload($file) {//画像アップロード機能

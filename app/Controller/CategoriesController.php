@@ -12,7 +12,8 @@ class CategoriesController extends AppController {
  *
  * @var string
  */
-	//public $layout = 'bootstrap';
+        //public $layout = 'bootstrap';
+        //a
 
 /**
  * Helpers

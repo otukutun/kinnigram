@@ -169,6 +169,7 @@ class NicesController extends AppController {
                                 )
                         );
                         $this->redirect(array('controller' => 'kintores','action' => 'index'));
+                        //$this->redirect(array('controller' => 'kintores','action' => 'index',$kintore_id['Kintore']['id']));
                 }
                 $this->Session->setFlash(
                         __('いいねができませんでした。'),
