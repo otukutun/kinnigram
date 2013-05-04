@@ -10,8 +10,6 @@
 			<dd>
                 カテゴリ:<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>
 				&nbsp; <br />
-				いいね:<?php echo h($kintore['Kintore']['nice_sum']); ?> 
-                &nbsp;<br />
                 投稿日:<?php echo h($kintore['Kintore']['created']); ?>
 				&nbsp;
 			</dd>
