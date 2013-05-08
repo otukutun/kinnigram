@@ -121,6 +121,23 @@ class Kintore extends AppModel {
                         return true;
                 }
 
-        }//end_function
+         }//end_function
+
+        public function countUp($id) {//筋肉閲覧数の更新
+                $this->recursive = 0;
+                $kintore = $this->find('first',array('conditions' => array('Kintore.id' => $id),'fields' => array('id','total_view')));
+                if ($kintore == null) {
+                        return false;
+                } else {
+                        $kintore['Kintore']['total_view'] += 1;
+                        $this->create();
+                        if ($this->save($kintore)) {
+                                return true;
+                        } else {
+                                return false;
+                        }//end_if_save
+                }//end_if_find or not
+
+        }
 
 }//end_class

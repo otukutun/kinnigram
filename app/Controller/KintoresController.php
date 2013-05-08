@@ -47,7 +47,8 @@ class KintoresController extends AppController {
 		$this->Kintore->id = $id;
 		if (!$this->Kintore->exists()) {
 			throw new NotFoundException(__('Invalid %s', __('kintore')));
-		}
+        }
+        $this->Kintore->countUp($id);
 		$this->Kintore->recursive = 1;
 		$this->set('kintore', $this->Kintore->read(null, $id));
         $this->set('auth_user',$this->Session->read('auth_user'));
