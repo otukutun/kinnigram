@@ -101,7 +101,6 @@ class Kintore extends AppModel {
                                 $im->writeImage(IMAGES . 'thumbnails' . DS . $file_path);
                                 $im->destroy();
                                 return true;
-
                         } catch (Exception $e) {
                                 return false;
                         }//endtry

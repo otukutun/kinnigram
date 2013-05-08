@@ -67,7 +67,7 @@ class KintoresController extends AppController {
 
                     if ($this->request->data['Kintore']['file'] === false) {//ファイルがアップロードされなかった場合の処理
                             $this->Session->setFlash(
-                                    __('The %s could not be saved. Please, try again.', __('kintore')),
+                                    __('アップロードされませんでした。'),
                                     'alert',
                                     array(
                                             'plugin' => 'TwitterBootstrap',
@@ -80,7 +80,7 @@ class KintoresController extends AppController {
 
                     if ($this->Kintore->save($this->request->data)) {
                             $this->Session->setFlash(
-                                    __('The %s has been saved', __('kintore')),
+                                    __('投稿されました。'),
                                     'alert',
                                     array(
                                             'plugin' => 'TwitterBootstrap',
@@ -90,7 +90,7 @@ class KintoresController extends AppController {
                             $this->redirect(array('action' => 'index'));
                     } else {
                             $this->Session->setFlash(
-                                    __('The %s could not be saved. Please, try again.', __('kintore')),
+                                    __('投稿に失敗しました。'),
                                     'alert',
                                     array(
                                             'plugin' => 'TwitterBootstrap',
