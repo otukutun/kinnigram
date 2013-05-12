@@ -1,55 +1,56 @@
 <div class="row-fluid">
     <div class="span12">
-        <h2><?php echo __('投稿一覧');?></h2>
-
         <p>
             <?php //echo $this->BootstrapPaginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')));?>
         </p>
         <?php $i = 0; ?>
         <?php foreach ($kintores as $kintore): ?>
 <?php if($i  == 0): ?>
-        <div class="row-fluid">
+        <div class="row">
 <?php endif; ?>
-            <div class="span4">
-                <div class="thumbnail"><?php echo $this->Html->image('thumbnails' . DS . $kintore['Kintore']['file']); ?>&nbsp;
-                    <div class="caption">
-                    <span><h4>カテゴリ：<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?>     <small><?php echo h($kintore['Kintore']['created']); ?>&nbsp;</small></span>
-</h4>
-                    <span>
-                    <?php echo $this->Html->image($kintore['User']['file'],array('alt' => h($kintore['User']['username']),'url' => 'https://twitter.com/' . h($kintore['User']['username']))); ?>
-                    <?php echo $this->Html->link(h($kintore['User']['username']), 'https://twitter.com/' . h($kintore['User']['username'])); ?>&nbsp;
+            <div class="span3 galery">
+                <div class="menu-galery">
+                    <ul>
+                        <li><?php echo $this->Html->link(__('<i class="iconbig-search"></i>'), array('controller' => 'kintores', 'action' => 'view',$kintore['Kintore']['id']),array('escape' => false,'rel' =>'tooltip','title' => '詳細')); ?></li>
+                        <li><?php echo $this->Html->link(__('<i class="iconbig-speak"></i>'), array('controller' => 'kintores', 'action' => 'view',$kintore['Kintore']['id']),array('escape' => false,'rel' =>'tooltip','title' => 'コメント')); ?></li>
                     <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],$auth_user['username']); ?>
-                    <?php if($nice_id === false): ?>
-                    <?php echo $this->Form->postLink('いいね', array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), null); ?>
+                    <?php if(empty($nice_id)  || $nice_id === false): ?>
+                    <?php echo $this->Form->postLink(__('<i class="iconbig-thumbs-up"></i>'), array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), array('escape' => false, 'rel' => 'tooltip', 'title' => 'いいね'),null); ?>
                     <?php else: ?>
                      <!--いいねしました。-->
-                    <?php echo $this->Form->postLink('いいねを取り消す', array('controller' => 'nices', 'action' => 'delete', $nice_id), null); ?>
+                    <?php echo $this->Form->postLink(__('<i class="iconbig-thumbs-down"></i>'), array('controller' => 'nices', 'action' => 'delete', $nice_id), array('escape' => false, 'rel' => 'tooltip', 'title' => 'いいねを取り消す'),null); ?>
                     <?php endif; ?>
-                    <?php echo $this->Html->link(__('詳細'), array('action' => 'view', $kintore['Kintore']['id'])); ?><br />
-                    <?php if ($kintore['Kintore']['nice_sum'] >= 1): ?>
-                    <div class='dropdown'>
-                    <?php echo $this->Html->link(h($kintore['Kintore']['nice_sum']) . '人', '#', array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>がいいねと言っています。&nbsp;
-<ul class='dropdown-menu' role='menu' target='_blank'>
-<?php foreach($kintore['Nice'] as $nice): ?>
-<li><?php echo $this->Html->link(h($nice['username']), 'https://twitter.com/' . h($nice['username'])); ?></li>
-<?php endforeach; ?>
-</ul><!-- end_ul_dropdown-menu-->
-                    </div><!--end_dropdown-menu -->
-                    <?php endif; ?>
-                    </span>
-                    <span>
 
-                    </span>
-                    </div><!-- end_caption-->
-                </div><!-- end_thumbnail-->
+                    </ul>
+                    
+                </div><!-- menu-galery-->
+                
+                <div class="image-galery">
+                    <?php echo $this->Html->image('thumbnails' . DS . $kintore['Kintore']['file']); ?>&nbsp;
+                </div><!-- image-galery-->
+                    <div class="count-galery">
+                        <ul>
+                        <li><i class="icon-comment"></i> 5</li>
+                        <!--<li><i class="icon-download-alt"></i> 7</li>-->
+                        <li><i class="icon-thumbs-up"></i><?php echo ' ' . h($kintore['Kintore']['nice_sum']); ?></li>
+                        <li><i class="icon-eye-open"></i> <?php echo ' ' . h($kintore['Kintore']['total_view']); ?></li>
+                    </ul>
+                    </div><!-- count-galery-->
+                    <div class="tags-galery">
+                        <p> <i class="icon-th-list"></i> カテゴリ : <?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?><br />
+                             投稿日 : <?php echo date("Y年 n月 j日",strtotime($kintore['Kintore']['created'])); ?>&nbsp;<br />
+                    投稿者 : <?php echo $this->Html->link(h($kintore['User']['username']), array('controller' => 'users', 'action' => 'view',h($kintore['User']['id']))); ?>&nbsp;
+                        </p>
+                    </div><!-- tags-galery-->
+
             </div><!-- end_span4-->
 <?php $i++; ?>
-<?php if($i == 3): ?>
+<?php if($i == 4): ?>
       </div><!-- end_row-fluid-->
         <?php $i = 0; ?>
 <?php endif; ?>
        <?php endforeach; ?>
-        <?php if($i != 3): ?>
+        <?php if($i != 4): ?>
 
       </div><!-- end_row-fluid-->
         <?php endif; ?>

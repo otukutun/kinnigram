@@ -66,10 +66,10 @@ class NicesController extends AppController {
                 if ($this->request->is('post')) {
                         $auth_user = $this->Session->read('auth_user');
                         $saved = $this->Nice->addNice($kintore_id,$auth_user['id'],$auth_user['username']);
-                        if ($saved) {
+                        if ($saved) {//kintoreテーブルのnice_sumを追加
 
-                                $this->Kintore->create();
-                                $this->Kintore->save(array('Kintore' => array('id' => $kintore_id, 'nice_sum' => $this->Nice->find('count',array('conditions' => array('Nice.kintore_id' => $kintore_id))))));
+                                $this->Kintore->id = $kintore_id;
+                                $this->Kintore->saveField('nice_sum',$this->Nice->find('count',array('conditions' => array('Nice.kintore_id' => $kintore_id))));
 
                                 $this->Session->setFlash(
                                         __('いいねしました'),

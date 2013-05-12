@@ -130,8 +130,8 @@ class Kintore extends AppModel {
                         return false;
                 } else {
                         $kintore['Kintore']['total_view'] += 1;
-                        $this->create();
-                        if ($this->save($kintore)) {
+                        $this->id = $kintore['Kintore']['id'];
+                        if ($this->saveField('total_view',$kintore['Kintore']['total_view'])) {
                                 return true;
                         } else {
                                 return false;

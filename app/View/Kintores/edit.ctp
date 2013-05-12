@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 		<?php echo $this->BootstrapForm->create('Kintore', array('class' => 'form-horizontal'));?>
 			<fieldset>

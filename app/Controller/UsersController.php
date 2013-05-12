@@ -19,6 +19,9 @@ class UsersController extends AppController {
  *
  * @var array
  */
+        public $uses = array('Nice','User','Kintore','Category');
+        public $paginate = array(
+                'limit' => 8);
 /**
  * Components
  *
@@ -95,7 +98,7 @@ class UsersController extends AppController {
  */
 	public function index() {
 		$this->User->recursive = 0;
-        $this->set('users', $this->paginate());
+        $this->set('users', $this->paginate('User'));
         $this->set('auth_user',$this->Session->read('auth_user'));
     }
 
@@ -149,8 +152,12 @@ class UsersController extends AppController {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid %s', __('user')));
-		}
+        }
+        $this->User->recursive = 0;
+        
 		$this->set('user', $this->User->read(null, $id));
+		$this->set('kintores', $this->paginate('Kintore', array('user_id' => $id)));
+        $this->set('auth_user',$this->Session->read('auth_user'));
 	}
 
 /**
@@ -219,7 +226,7 @@ class UsersController extends AppController {
 						'class' => 'alert-success'
 					)
 				);
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'view',$id));
 			} else {
 				$this->Session->setFlash(
 					__('ユーザ情報が更新されませんでした。'),
@@ -233,6 +240,8 @@ class UsersController extends AppController {
 		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
+        $this->set('auth_user',$auth_user);
+        $this->set('user',$this->User->find('first',array('conditions' => array('id' => $id))));
 	}
 
 /**

@@ -67,9 +67,19 @@
                     <ul class="nav pull-right">
                         <li class="divider-vertical"></li>
                         <?php if ($this->Session->check('Auth.User')): ?>
-                        <li><?php echo $this->Html->link(__('ログアウト'), array('controller' => 'users', 'action' => 'logout')); ?></li>
+                        <li class="gravatar"><?php echo $this->Html->link('', array('controller' => 'users', 'action' => 'view',$auth_user['id']),array('escape' => false)); ?></li>
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo h($auth_user['username']); ?><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><?php echo $this->Html->link("<i class='icon-user'></i>  ユーザ情報", array('controller' => 'users', 'action' => 'view',$auth_user['id']),array('escape' => false)); ?></li>
+                                <li class="divider"></li>
+                                <li><?php echo $this->Html->link("<i class='icon-cog'></i>  ユーザ情報編集", array('controller' => 'users', 'action' => 'edit',$auth_user['id']),array('escape' => false)); ?></li>
+                                <li class="divider"></li>
+                                <li><?php echo $this->Html->link("<i class='icon-off'></i>  ログアウト", array('controller' => 'users', 'action' => 'logout'),array('escape' => false)); ?></li>
+                            </ul>
+                        </li>
                         <?php else: ?>
-                        <li><?php echo $this->Html->link(__('<i class="icon-lock"></i>ログイン'), array('controller' => 'users', 'action' => 'login'),array('escape' => false)); ?></li>
+                        <li><?php echo $this->Html->link(__("<i class='icon-lock'></i>  ログイン"), array('controller' => 'users', 'action' => 'login'),array('escape' => false)); ?></li>
                         <li class="divider-vertical"></li>
                         <li><?php echo $this->Html->link(__('<i class="icon-lock"></i>アカウント登録'), array('controller' => 'users', 'action' => 'login'),array('escape' => false)); ?></li>
                         <li class="divider-vertical"></li>

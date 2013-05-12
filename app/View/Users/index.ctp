@@ -16,8 +16,8 @@
 			<tr>
                 <td><?php echo $this->Html->image($user['User']['file'],
                                                     array('alt' => h($user['User']['username']),
-                                                    'url' => 'https://twitter.com/' . h($user['User']['username']))); ?>&nbsp;
-                    <?php echo $this->Html->link(h($user['User']['username']),'https://twitter.com/' . h($user['User']['username'])); ?>&nbsp;
+                                                    'url' => array('controller' => 'users', 'action' => 'view',  h($user['User']['id'])))); ?>&nbsp;
+                    <?php echo $this->Html->link(h($user['User']['username']),array('controller' => 'users', 'action' => 'view',  h($user['User']['id']))); ?>&nbsp;
                 </td>
 				<td><?php echo h($user['User']['created']); ?>&nbsp;</td>
                 <td class="actions">
