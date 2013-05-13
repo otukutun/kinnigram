@@ -19,7 +19,8 @@ class CommentsController extends AppController {
  *
  * @var array
  */
-	//public $helpers = array('TwitterBootstrap.BootstrapForm', 'TwitterBootstrap.BootstrapPaginator');
+        //public $helpers = array('TwitterBootstrap.BootstrapForm', 'TwitterBootstrap.BootstrapPaginator');
+        public $uses = array('Nice','User','Kintore','Category','Comment');
 /**
  * Components
  *
@@ -61,7 +62,11 @@ class CommentsController extends AppController {
                 $auth_user = $this->Session->read('auth_user');
                 $this->request->data['Comment']['user_id'] = $auth_user['id'];
                 $this->request->data['Comment']['username'] = $auth_user['username'];
-			if ($this->Comment->save($this->request->data)) {
+                if ($this->Comment->save($this->request->data)) {
+                        //コメントの合計数をカウントする
+                        $this->Kintore->id = $this->request->data['Comment']['kintore_id'];
+                        $this->Kintore->saveField('comment_sum',$this->Comment->find('count',array('conditions' => array('kintore_id' => $this->request->data['Comment']['kintore_id']))));
+
 				$this->Session->setFlash(
 					__('コメントが投稿されました。'),
 					'alert',
