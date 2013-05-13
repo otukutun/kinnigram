@@ -38,6 +38,7 @@ class AppSchema extends CakeSchema {
 		'nice_sum' => array('type' => 'integer', 'null' => true, 'default' => '0'),
 		'total_view' => array('type' => 'integer', 'null' => true, 'default' => '0'),
 		'file' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 70, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'comment_sum' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
