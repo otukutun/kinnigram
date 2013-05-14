@@ -48,11 +48,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="#"><?php echo $this->Html->image('logo.png'); ?></a>
+				<?php echo $this->Html->image('logo.png',array('url' => array('controller' => 'users', 'action' => 'top'),'width' => 155, 'height' => 22,'class' => 'brand','style' => 'padding-top:10px;')); ?>
                 <div class="nav-collapse">
                     <ul class="nav">
-                        <?php if ($this->Session->check('Auth.User')): ?>
                         <li class="divider-vertical"></li>
+                        <?php if ($this->Session->check('Auth.User')): ?>
                         <li><?php echo $this->Html->link(__('ホーム'), array('controller' => 'kintores', 'action' => 'index')); ?></li>
                         <li class="divider-vertical"></li>
                         <li><?php echo $this->Html->link(__('投稿'), array('controller' => 'kintores', 'action' => 'add')); ?></li>
@@ -60,14 +60,14 @@
                         <li><?php echo $this->Html->link(__('ユーザ一覧'), array('controller' => 'users', 'action' => 'index')); ?></li>
                         <li class="divider-vertical"></li>
                         <?php else: ?>
-                        <li><a href="about.html">このサイトについて</a></li>
+                        <li><?php echo $this->Html->link(__('サイトについて'), array('controller' => 'users', 'action' => 'about')); ?></li>
                         <li class="divider-vertical"></li>
                         <?php endif ; ?>
                    </ul>
                     <ul class="nav pull-right">
                         <li class="divider-vertical"></li>
                         <?php if ($this->Session->check('Auth.User')): ?>
-                        <li class="gravatar"><?php echo $this->Html->link('', array('controller' => 'users', 'action' => 'view',$auth_user['id']),array('escape' => false)); ?></li>
+                        <li><?php echo $this->Html->image(h($auth_user['file']),array('height' => 30, 'width' => 34)); ?></li>
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo h($auth_user['username']); ?><b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -81,7 +81,7 @@
                         <?php else: ?>
                         <li><?php echo $this->Html->link(__("<i class='icon-lock'></i>  ログイン"), array('controller' => 'users', 'action' => 'login'),array('escape' => false)); ?></li>
                         <li class="divider-vertical"></li>
-                        <li><?php echo $this->Html->link(__('<i class="icon-lock"></i>アカウント登録'), array('controller' => 'users', 'action' => 'login'),array('escape' => false)); ?></li>
+                        <li><?php echo $this->Html->link(__('<i class="icon-edit"></i>アカウント登録'), array('controller' => 'users', 'action' => 'twitter_add'),array('escape' => false)); ?></li>
                         <li class="divider-vertical"></li>
                         <?php endif ; ?>
                         
@@ -108,7 +108,7 @@
             <div class="span6">&copy; 2013 きんにぐらむ. All right reserved.</div>
             <div class="span6">
                 <ul>
-                    <li><a href="#">開発者について</a></li>
+                    <li><a href="https://twitter.com/otukutun">開発者について</a></li>
                     <li><a href="#">プライバシー</a></li>
                 </ul>
             </div>

@@ -26,18 +26,18 @@
                 </div><!-- menu-galery-->
                 
                 <div class="image-galery">
-                    <?php echo $this->Html->image('thumbnails' . DS . $kintore['Kintore']['file']); ?>&nbsp;
+                    <?php echo $this->Html->image('thumbnails' . DS . h($kintore['Kintore']['file']),array('height' => 225, 'width' => 220)); ?>&nbsp;
                 </div><!-- image-galery-->
                     <div class="count-galery">
                         <ul>
-                        <li><i class="icon-comment"></i> 5</li>
+                        <li><i class="icon-comment"></i> <?php echo ' ' . h($kintore['Kintore']['comment_sum']); ?></li>
                         <!--<li><i class="icon-download-alt"></i> 7</li>-->
                         <li><i class="icon-thumbs-up"></i><?php echo ' ' . h($kintore['Kintore']['nice_sum']); ?></li>
                         <li><i class="icon-eye-open"></i> <?php echo ' ' . h($kintore['Kintore']['total_view']); ?></li>
                     </ul>
                     </div><!-- count-galery-->
                     <div class="tags-galery">
-                        <p> <i class="icon-th-list"></i> カテゴリ : <?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?><br />
+                        <p> <i class="icon-th-list"></i> カテゴリ : <?php echo h($kintore['Category']['name']); ?> <?php /*echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); */?><br />
                              投稿日 : <?php echo date("Y年 n月 j日",strtotime($kintore['Kintore']['created'])); ?>&nbsp;<br />
                     投稿者 : <?php echo $this->Html->link(h($kintore['User']['username']), array('controller' => 'users', 'action' => 'view',h($kintore['User']['id']))); ?>&nbsp;
                         </p>

@@ -8,99 +8,120 @@ App::import('Vendor', 'OAuth/OAuthClient');
  */
 class UsersController extends AppController {
 
-/**
- *  Layout
- *
- * @var string
- */
+        /**
+         *  Layout
+         *
+         * @var string
+         */
 
-/**
- * Helpers
- *
- * @var array
- */
-        public $uses = array('Nice','User','Kintore','Category');
+        /**
+         * Helpers
+         *
+         * @var array
+         */
+        public $uses = array('Nice','User','Kintore','Category','Comment');
         public $paginate = array(
                 'limit' => 8);
-/**
- * Components
- *
- * @var array
- */
+        /**
+         * Components
+         *
+         * @var array
+         */
 
-    public function beforeFilter() {
-            parent::beforeFilter();
-            $this->Auth->allow('twitter_login','login','callback');
-    }
+        public function beforeFilter() {
+                parent::beforeFilter();
+                $this->Auth->allow('twitter_login','login','callback','twitter_add','about','top');
+        }
 
-    public function twitter_login() {
-            $client = $this->createClient();
-            $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/nomado/users/callback');
-            debug($requestToken);
-            if ($requestToken) {
-                $this->Session->write('twitter_request_token',$requestToken);
-                $this->redirect('https://api.twitter.com/oauth/authorize?oauth_token=' . $requestToken->key);
-            } else {
-                    $this->Session->setFlash(__('signed out'));
-                    $this->redirect(array('controller' => 'users','action' => 'login'));
-            }
+        public function twitter_add() {//ユーザ登録のページ
+        }
 
-    }
+        public function about() {//ユーザ登録のページ
+                if ($this->Auth->loggedIn()) {
+                        $this->set('auth_user',$this->Session->read('auth_user'));
+                } 
+        }
 
-    public function callback() {
-            $requestToken = $this->Session->read('twitter_request_token');
-            $client = $this->createClient();
-            $accessToken = $client->getAccessToken('https://api.twitter.com/oauth/access_token',$requestToken);
+        public function top() {//ユーザ登録のページ
+                if ($this->Auth->loggedIn()) {
+                        $this->set('auth_user',$this->Session->read('auth_user'));
+                } 
+        }
+        public function twitter_login() {
+                $client = $this->createClient();
+                $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/nomado/users/callback');
+                debug($requestToken);
+                if ($requestToken) {
+                        $this->Session->write('twitter_request_token',$requestToken);
+                        $this->redirect('https://api.twitter.com/oauth/authorize?oauth_token=' . $requestToken->key);
+                } else {
+                        $this->Session->setFlash(__('signed out'));
+                        $this->redirect(array('controller' => 'users','action' => 'login'));
+                }
 
-            if ($accessToken) {
-                    debug($accessToken);
-                    $user_json = $client->get($accessToken->key, $accessToken->secret,'https://api.twitter.com/1.1/account/verify_credentials.json');
-                    $user = json_decode($user_json, true);
+        }
 
-                    if ($user) {
-                            $user_id = $this->User->twitterUpdate(array(
-                                                        'twitter_id' => $user['id_str'],
-                                                        'username' => $user['screen_name'],
-                                                        'oauth_token' => $accessToken->key,
-                                                        'oauth_token_secret' => $accessToken->secret,
-                                                        'file' => $user['profile_image_url'],
-                                                ));
-                            $auth = array('User' => array('oauth_token' => $accessToken->key,
-                                    'oauth_token_secret' => $accessToken->secret,
-                            ));
+        public function callback() {
+                $requestToken = $this->Session->read('twitter_request_token');
+                $client = $this->createClient();
+                $accessToken = $client->getAccessToken('https://api.twitter.com/oauth/access_token',$requestToken);
 
-                            if ($this->Auth->login($auth)) {
-                                    $this->Session->write('auth_user',$user_id['User']);
-                                    $this->redirect(array('controller' => 'kintores','action' => 'index'));
-                            } /*else {
-                                    $this->redirect(array('controller' => 'users','action' => 'login'));
-                            }*/
-                    } /*else {
-                                    $this->redirect(array('controller' => 'users','action' => 'login'));
-                    } */
+                if ($accessToken) {
+                        debug($accessToken);
+                        $user_json = $client->get($accessToken->key, $accessToken->secret,'https://api.twitter.com/1.1/account/verify_credentials.json');
+                        $user = json_decode($user_json, true);
 
-            }
-    }
+                        if ($user) {
+                                $user_id = $this->User->twitterUpdate(array(
+                                        'twitter_id' => $user['id_str'],
+                                        'username' => $user['screen_name'],
+                                        'oauth_token' => $accessToken->key,
+                                        'oauth_token_secret' => $accessToken->secret,
+                                        'file' => $user['profile_image_url'],
+                                ));
+                                $auth = array('User' => array('oauth_token' => $accessToken->key,
+                                        'oauth_token_secret' => $accessToken->secret,
+                                ));
 
-    public function login() {
-    }
+                                if ($this->Auth->login($auth)) {
+                                        $this->Session->write('auth_user',$user_id['User']);
+                                        $this->redirect(array('controller' => 'kintores','action' => 'index'));
+                                } /*else {
+                                        $this->redirect(array('controller' => 'users','action' => 'login'));
+                        }*/
+                        } /*else {
+                                $this->redirect(array('controller' => 'users','action' => 'login'));
+                } */
 
-    public function logout() {
-            $this->Session->destroy();
-            $this->Session->setFlash(__('signed out'));
-            $this->Session->delete($this->Auth->sessionKey);
-            $this->redirect($this->Auth->logoutRedirect);
-    }
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->User->recursive = 0;
-        $this->set('users', $this->paginate('User'));
-        $this->set('auth_user',$this->Session->read('auth_user'));
-    }
+                }
+        }
+
+        public function login() {
+        }
+
+        public function logout() {
+                $this->Session->destroy();
+                $this->Session->setFlash(
+                        __('ログアウトしました。'),
+                        'alert',
+                        array(
+                                'plugin' => 'TwitterBootstrap',
+                                'class' => 'alert-success'
+                        )
+                );
+                $this->Session->delete($this->Auth->sessionKey);
+                $this->redirect($this->Auth->logoutRedirect);
+        }
+        /**
+         * index method
+         *
+         * @return void
+         */
+        public function index() {
+                $this->User->recursive = 0;
+                $this->set('users', $this->paginate('User'));
+                $this->set('auth_user',$this->Session->read('auth_user'));
+        }
 
     /*public function oauth_callback() {
 
@@ -142,145 +163,145 @@ class UsersController extends AppController {
 
     }*/
 
-/**
- * view method
- *
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid %s', __('user')));
+        /**
+         * view method
+         *
+         * @param string $id
+         * @return void
+         */
+        public function view($id = null) {
+                $this->User->id = $id;
+                if (!$this->User->exists()) {
+                        throw new NotFoundException(__('Invalid %s', __('user')));
+                }
+                $this->User->recursive = 0;
+
+                $this->set('user', $this->User->read(null, $id));
+                $this->set('kintores', $this->paginate('Kintore', array('user_id' => $id)));
+                $this->set('auth_user',$this->Session->read('auth_user'));
         }
-        $this->User->recursive = 0;
-        
-		$this->set('user', $this->User->read(null, $id));
-		$this->set('kintores', $this->paginate('Kintore', array('user_id' => $id)));
-        $this->set('auth_user',$this->Session->read('auth_user'));
-	}
 
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->User->create();
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(
-					__('The %s has been saved', __('user')),
-					'alert',
-					array(
-						'plugin' => 'TwitterBootstrap',
-						'class' => 'alert-success'
-					)
-				);
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(
-					__('The %s could not be saved. Please, try again.', __('user')),
-					'alert',
-					array(
-						'plugin' => 'TwitterBootstrap',
-						'class' => 'alert-error'
-					)
-				);
-			}
-		}
-	}
-
-/**
- * edit method
- *
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid %s', __('user')));
+        /**
+         * add method
+         *
+         * @return void
+         */
+        public function add() {
+                if ($this->request->is('post')) {
+                        $this->User->create();
+                        if ($this->User->save($this->request->data)) {
+                                $this->Session->setFlash(
+                                        __('The %s has been saved', __('user')),
+                                        'alert',
+                                        array(
+                                                'plugin' => 'TwitterBootstrap',
+                                                'class' => 'alert-success'
+                                        )
+                                );
+                                $this->redirect(array('action' => 'index'));
+                        } else {
+                                $this->Session->setFlash(
+                                        __('The %s could not be saved. Please, try again.', __('user')),
+                                        'alert',
+                                        array(
+                                                'plugin' => 'TwitterBootstrap',
+                                                'class' => 'alert-error'
+                                        )
+                                );
+                        }
+                }
         }
-        $auth_user = $this->Session->read('auth_user');
 
-        if ($auth_user['id'] !== $id) {//本人か確認
-				$this->Session->setFlash(
-					__('編集できません'),
-					'alert',
-					array(
-						'plugin' => 'TwitterBootstrap',
-						'class' => 'alert-error'
-					)
-				);
-				$this->redirect(array('action' => 'index'));
+        /**
+         * edit method
+         *
+         * @param string $id
+         * @return void
+         */
+        public function edit($id = null) {
+                $this->User->id = $id;
+                if (!$this->User->exists()) {
+                        throw new NotFoundException(__('Invalid %s', __('user')));
+                }
+                $auth_user = $this->Session->read('auth_user');
+
+                if ($auth_user['id'] !== $id) {//本人か確認
+                        $this->Session->setFlash(
+                                __('編集できません'),
+                                'alert',
+                                array(
+                                        'plugin' => 'TwitterBootstrap',
+                                        'class' => 'alert-error'
+                                )
+                        );
+                        $this->redirect(array('action' => 'index'));
+                }
+
+                if ($this->request->is('post') || $this->request->is('put')) {
+                        if ($this->User->save($this->request->data)) {
+                                $this->Session->setFlash(
+                                        __('ユーザ情報を編集しました。'),
+                                        'alert',
+                                        array(
+                                                'plugin' => 'TwitterBootstrap',
+                                                'class' => 'alert-success'
+                                        )
+                                );
+                                $this->redirect(array('action' => 'view',$id));
+                        } else {
+                                $this->Session->setFlash(
+                                        __('ユーザ情報が更新されませんでした。'),
+                                        'alert',
+                                        array(
+                                                'plugin' => 'TwitterBootstrap',
+                                                'class' => 'alert-error'
+                                        )
+                                );
+                        }
+                } else {
+                        $this->request->data = $this->User->read(null, $id);
+                }
+                $this->set('auth_user',$auth_user);
+                $this->set('user',$this->User->find('first',array('conditions' => array('id' => $id))));
         }
-        
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(
-					__('ユーザ情報を編集しました。'),
-					'alert',
-					array(
-						'plugin' => 'TwitterBootstrap',
-						'class' => 'alert-success'
-					)
-				);
-				$this->redirect(array('action' => 'view',$id));
-			} else {
-				$this->Session->setFlash(
-					__('ユーザ情報が更新されませんでした。'),
-					'alert',
-					array(
-						'plugin' => 'TwitterBootstrap',
-						'class' => 'alert-error'
-					)
-				);
-			}
-		} else {
-			$this->request->data = $this->User->read(null, $id);
-		}
-        $this->set('auth_user',$auth_user);
-        $this->set('user',$this->User->find('first',array('conditions' => array('id' => $id))));
-	}
 
-/**
- * delete method
- *
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid %s', __('user')));
-		}
-		if ($this->User->delete()) {
-			$this->Session->setFlash(
-				__('The %s deleted', __('user')),
-				'alert',
-				array(
-					'plugin' => 'TwitterBootstrap',
-					'class' => 'alert-success'
-				)
-			);
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(
-			__('The %s was not deleted', __('user')),
-			'alert',
-			array(
-				'plugin' => 'TwitterBootstrap',
-				'class' => 'alert-error'
-			)
-		);
-		$this->redirect(array('action' => 'index'));
-    }
+        /**
+         * delete method
+         *
+         * @param string $id
+         * @return void
+         */
+        public function delete($id = null) {
+                if (!$this->request->is('post')) {
+                        throw new MethodNotAllowedException();
+                }
+                $this->User->id = $id;
+                if (!$this->User->exists()) {
+                        throw new NotFoundException(__('Invalid %s', __('user')));
+                }
+                if ($this->User->delete()) {
+                        $this->Session->setFlash(
+                                __('The %s deleted', __('user')),
+                                'alert',
+                                array(
+                                        'plugin' => 'TwitterBootstrap',
+                                        'class' => 'alert-success'
+                                )
+                        );
+                        $this->redirect(array('action' => 'index'));
+                }
+                $this->Session->setFlash(
+                        __('The %s was not deleted', __('user')),
+                        'alert',
+                        array(
+                                'plugin' => 'TwitterBootstrap',
+                                'class' => 'alert-error'
+                        )
+                );
+                $this->redirect(array('action' => 'index'));
+        }
 
-    private function createClient() {
-            return new OAuthClient('Ec5mcESyv0AhWrc46GbHrg', 'PFX8NjtBS1XdLuuHIhQ4TGFLH8NHzhP5ijWS8UK0Js');
-    }
+        private function createClient() {
+                return new OAuthClient('Ec5mcESyv0AhWrc46GbHrg', 'PFX8NjtBS1XdLuuHIhQ4TGFLH8NHzhP5ijWS8UK0Js');
+        }
 }

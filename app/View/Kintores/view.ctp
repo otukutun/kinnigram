@@ -55,7 +55,7 @@
         <div class='row'>
             <div class="span3 sidebar-detail-menu">
             <ul>
-                <li><?php echo $this->Html->link(__('<i class="iconbig-share-left"></i>'), '#add-comment',array('escape' => false,'rel' =>'tooltip','title' => 'twitterで共有')); ?></li>
+                <li><?php echo $this->Html->link(__('<i class="iconbig-heart"></i>'), '#add-comment',array('escape' => false,'rel' =>'tooltip','title' => 'お気に入り登録')); ?></li>
                 <li><?php echo $this->Html->link(__('<i class="iconbig-speak"></i>'), '#add-comment',array('escape' => false,'rel' =>'tooltip','title' => 'コメント投稿')); ?></li>
                 <li>
                 <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],$auth_user['username']); ?>

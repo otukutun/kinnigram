@@ -1,7 +1,7 @@
 <div class="row">
     <div class="span3 left-sidebar">
         <div class="account-settings">
-			<?php echo $this->Html->image($user['User']['file'],array('height' => 210, 'weight' => 230)); ?>
+			<?php echo $this->Html->image($user['User']['file'],array('height' => 210, 'width' => 230)); ?>
         </div><!-- acount-settings -->
         <div class="account-detail">
             <p><strong>ユーザ名:</strong>
