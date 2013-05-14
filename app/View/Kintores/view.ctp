@@ -7,16 +7,6 @@
                 &nbsp;
                 </div><!-- auto image-single-->
             </div><!-- end_span9-image-detail-->
-            <!--
-            <div class="span9 image-description">
-                <h3>Description</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed erat tristique sem rutrum laoreet facilisis ut tortor. 
-                        Cras tristique ultricies est sit amet consequat. Quisque nibh nunc, consequat at molestie vel, fermentum sit amet felis. 
-                        Donec id lectus ligula, non tempus ante. Aliquam ut turpis enim, eget rhoncus arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Morbi feugiat accumsan felis, in mattis sapien fringilla et. Nullam placerat viverra massa, eu vestibulum neque blandit in. 
-                        Morbi ac diam ac elit interdum tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas laoreet, enim sit amet faucibus rhoncus, eros tortor.
-                </p>
-            </div>--> <!-- end_span9-image-description-->
             
             <div class="span9 image-comments">
                 <div class="comment">
@@ -55,7 +45,13 @@
         <div class='row'>
             <div class="span3 sidebar-detail-menu">
             <ul>
-                <li><?php echo $this->Html->link(__('<i class="iconbig-heart"></i>'), '#add-comment',array('escape' => false,'rel' =>'tooltip','title' => 'お気に入り登録')); ?></li>
+                <li>
+                    <?php $favorite_id = $this->Kintore->checkFavorite($kintore['Favorite'],$auth_user['username']); ?>
+                    <?php if($favorite_id === false): ?>
+                    <?php echo $this->Form->postLink(__('<i class="iconbig-black-star"></i>'), array('controller' => 'favorites', 'action' => 'add', $kintore['Kintore']['id']), array('escape' => false,'rel' =>'tooltip','title' => 'お気に入り登録')); ?></li>
+                    <?php else: ?>
+                    <?php echo $this->Form->postLink(__('<i class="iconbig-white-star"></i>'), array('controller' => 'favorites', 'action' => 'delete', $favorite_id), array('escape' => false,'rel' =>'tooltip','title' => 'お気に入りを取り消す')); ?></li>
+                    <?php endif; ?>
                 <li><?php echo $this->Html->link(__('<i class="iconbig-speak"></i>'), '#add-comment',array('escape' => false,'rel' =>'tooltip','title' => 'コメント投稿')); ?></li>
                 <li>
                 <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],$auth_user['username']); ?>

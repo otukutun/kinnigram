@@ -189,13 +189,13 @@
 
 .menu-galery{
     border-bottom:1px solid #ccc;
-    margin-top:4px;
+    //margin-top:4px;
     height:40px;
 }
 
 .menu-galery ul{
     list-style-type: none;
-    margin-left:50.5px;
+    //margin-left:50.5px;
 }
 
 .menu-galery ul li{

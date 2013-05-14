@@ -13,14 +13,26 @@
                     <ul>
                         <li><?php echo $this->Html->link(__('<i class="iconbig-search"></i>'), array('controller' => 'kintores', 'action' => 'view',$kintore['Kintore']['id']),array('escape' => false,'rel' =>'tooltip','title' => '詳細')); ?></li>
                         <li><?php echo $this->Html->link(__('<i class="iconbig-speak"></i>'), array('controller' => 'kintores', 'action' => 'view',$kintore['Kintore']['id']),array('escape' => false,'rel' =>'tooltip','title' => 'コメント')); ?></li>
+
                     <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],$auth_user['username']); ?>
+                    <li>
                     <?php if(empty($nice_id)  || $nice_id === false): ?>
                     <?php echo $this->Form->postLink(__('<i class="iconbig-thumbs-up"></i>'), array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), array('escape' => false, 'rel' => 'tooltip', 'title' => 'いいね'),null); ?>
                     <?php else: ?>
                      <!--いいねしました。-->
                     <?php echo $this->Form->postLink(__('<i class="iconbig-thumbs-down"></i>'), array('controller' => 'nices', 'action' => 'delete', $nice_id), array('escape' => false, 'rel' => 'tooltip', 'title' => 'いいねを取り消す'),null); ?>
                     <?php endif; ?>
+                    </li>
 
+                    <?php $favorite_id = $this->Kintore->checkFavorite($kintore['Favorite'],$auth_user['username']); ?>
+                    <li>
+                    <?php if(empty($favorite_id)  || $favorite_id === false): ?>
+                    <?php echo $this->Form->postLink(__('<i class="iconbig-black-star"></i>'), array('controller' => 'favorites', 'action' => 'add', $kintore['Kintore']['id']), array('escape' => false, 'rel' => 'tooltip', 'title' => 'お気に入り登録'),null); ?>
+                    <?php else: ?>
+                     <!--いいねしました。-->
+                    <?php echo $this->Form->postLink(__('<i class="iconbig-white-star"></i>'), array('controller' => 'favorites', 'action' => 'delete', $favorite_id), array('escape' => false, 'rel' => 'tooltip', 'title' => 'お気に入りを取り消す'),null); ?>
+                    <?php endif; ?>
+                    </li>
                     </ul>
                     
                 </div><!-- menu-galery-->

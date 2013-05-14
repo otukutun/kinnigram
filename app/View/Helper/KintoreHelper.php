@@ -27,4 +27,19 @@ class KintoreHelper extends AppHelper {
                     return false;
             }
 
+            public function checkFavorite($favorites = null,$username = null) {//いいねを既にしたかどうか確認
+                    if ($favorites === null || $username === null) {
+                            return false;
+                    }
+
+                    foreach($favorites as $favorite) {
+                            if ($favorite['username'] === $username) {
+                                    return $favorite['id'];
+                                    break;
+                            } 
+                    }
+                    return false;
+            }//function
+
+
 }//endclass

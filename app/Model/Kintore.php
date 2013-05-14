@@ -13,7 +13,7 @@ class Kintore extends AppModel {
          *
          * @var mixed False or table name
          */
-        public $useTable = 'kintore';
+        public $useTable = 'kintores';
 
 
         //The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -65,6 +65,19 @@ class Kintore extends AppModel {
                         'dependent' => false,
                         'conditions' => '',
                         'fields' => array('id','user_id','kintore_id','username','created','body'),
+                        'order' => '',
+                        'limit' => '',
+                        'offset' => '',
+                        'exclusive' => '',
+                        'finderQuery' => '',
+                        'counterQuery' => ''
+                ),
+                'Favorite' => array(
+                        'className' => 'Favorite',
+                        'foreignKey' => 'kintore_id',
+                        'dependent' => false,
+                        'conditions' => '',
+                        'fields' => array('id','user_id','kintore_id','username','created'),
                         'order' => '',
                         'limit' => '',
                         'offset' => '',

@@ -1,12 +1,12 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Nice Model
+ * Favorite Model
  *
- * @property Kintore $Kintore
  * @property User $User
+ * @property Kintore $Kintore
  */
-class Nice extends AppModel {
+class Favorite extends AppModel {
 
 
         //The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -17,30 +17,30 @@ class Nice extends AppModel {
          * @var array
          */
         public $belongsTo = array(
-                'Kintore' => array(
-                        'className' => 'Kintore',
-                        'foreignKey' => 'kintore_id',
-                        'conditions' => '',
-                        'fields' => '',
-                        'order' => ''
-                ),
                 'User' => array(
                         'className' => 'User',
                         'foreignKey' => 'user_id',
                         'conditions' => '',
                         'fields' => '',
                         'order' => ''
+                ),
+                'Kintore' => array(
+                        'className' => 'Kintore',
+                        'foreignKey' => 'kintore_id',
+                        'conditions' => '',
+                        'fields' => '',
+                        'order' => ''
                 )
         );
 
-        public function addNice($kintore_id = null,$user_id = null,$username = null) {//いいねを追加
+        public function addFavorite($kintore_id,$user_id,$username) {//お気に入り登録
                 if ($kintore_id && $user_id) {
-                        $nice = $this->find('first',array('conditions' => array('Nice.kintore_id' => $kintore_id, 'Nice.user_id' => $user_id)));
-                        if ($nice) {//既に登録されていた場合
+                        $favorite = $this->find('first',array('conditions' => array('Favorite.kintore_id' => $kintore_id, 'Favorite.user_id' => $user_id)));
+                        if ($favorite) {//既に登録されていた場合
                                 return false;
                         } else {//始めてのばあい
                                 $this->create();
-                                $this->save(array('Nice' => array('kintore_id' => $kintore_id,
+                                $this->save(array('Favorite' => array('kintore_id' => $kintore_id,
                                         'user_id' => $user_id,
                                         'username' => $username,
                                 )));
@@ -49,6 +49,5 @@ class Nice extends AppModel {
                         return false;
                 }
 
-        }//end_function_addNice
-
-}//endclass
+        }
+}
