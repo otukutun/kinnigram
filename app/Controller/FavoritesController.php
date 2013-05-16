@@ -24,15 +24,28 @@ class FavoritesController extends AppController {
          * @var array
          */
         public $uses = array('Nice','User','Kintore','Category','Favorite');
+        public $paginate = array(
+                'limit' => 8);
 
         /**
          * index method
          *
          * @return void
          */
-        public function index() {
+        public function index($id = null) {
+                if ($id == null) {
+                        $this->redirect(array('controller' => 'kintores','action' => 'index'));
+                }
+                $this->User->id = $id;
+                if (!$this->User->exists()) {
+                        throw new NotFoundException(__('Invalid %s', __('user')));
+                }
+
                 $this->Favorite->recursive = 0;
-                $this->set('favorites', $this->paginate());
+                $auth_user = $this->Session->read('auth_user');
+                $this->set('auth_user',$auth_user);
+                $this->set('user',$this->User->read(null,$id));
+                $this->set('favorites', $this->paginate('Favorite', array('Favorite.user_id' => 1)));
         }
 
         /**

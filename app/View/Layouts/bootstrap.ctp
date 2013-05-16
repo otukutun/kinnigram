@@ -22,8 +22,7 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<link rel="shortcut icon" href="/img/favicon.ico">
-	<link rel="icon" href="/img/favicon.ico">
+    <?php echo $this->Html->meta('favicon.ico', FULL_BASE_URL . '/nomado/img/favicon.ico',array('type' => 'icon')); ?>
 	<!-- Le fav and touch icons -->
 	<!--
 	<link rel="shortcut icon" href="/ico/favicon.ico">
@@ -47,8 +46,8 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
-				</a>
-				<?php echo $this->Html->image('logo.png',array('url' => array('controller' => 'users', 'action' => 'top'),'width' => 155, 'height' => 22,'class' => 'brand','style' => 'padding-top:10px;')); ?>
+                </a>
+				<?php echo $this->Html->image('kinnigram_logo.png',array('url' => array('controller' => 'users', 'action' => 'top'),'width' => 155, 'height' => 22,'class' => 'brand','style' => 'padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;')); ?>
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li class="divider-vertical"></li>
@@ -74,6 +73,8 @@
                                 <li><?php echo $this->Html->link("<i class='icon-user'></i>  ユーザ情報", array('controller' => 'users', 'action' => 'view',$auth_user['id']),array('escape' => false)); ?></li>
                                 <li class="divider"></li>
                                 <li><?php echo $this->Html->link("<i class='icon-cog'></i>  ユーザ情報編集", array('controller' => 'users', 'action' => 'edit',$auth_user['id']),array('escape' => false)); ?></li>
+                                <li class="divider"></li>
+                                <li><?php echo $this->Html->link("<i class='icon-cog'></i>  お気に入り一覧", array('controller' => 'favorites', 'action' => 'index',$auth_user['id']),array('escape' => false)); ?></li>
                                 <li class="divider"></li>
                                 <li><?php echo $this->Html->link("<i class='icon-off'></i>  ログアウト", array('controller' => 'users', 'action' => 'logout'),array('escape' => false)); ?></li>
                             </ul>

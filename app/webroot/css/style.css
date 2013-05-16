@@ -48,6 +48,12 @@
  border-top:1px solid #ccc;
 }
 
+#logo {
+    padding: 0px 0px 0px 0px;
+     
+    margin: 0px 0px 0px 0px;
+}
+
 .navbar .divider-vertical {
   width: 1px;
   height: 40px;

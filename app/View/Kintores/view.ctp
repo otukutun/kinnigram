@@ -66,7 +66,9 @@
             </div><!-- .span3 sidebar-detail-menu-->
             <div class="span3 sidebar-detail-category">
                         <div class="category-image">
-                            <div class="cat-category">カテゴリ :<?php echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?> </div>
+                            <div class="cat-category">カテゴリ :<?php //echo $this->Html->link($kintore['Category']['name'], array('controller' => 'categories', 'action' => 'view', $kintore['Category']['id'])); ?> 
+                            <?php echo h($kintore['Category']['name']); ?>
+                            </div>
                             <div class="cat-liked">いいね by: 
                                 <?php if ($kintore['Kintore']['nice_sum'] >= 1): ?>
                                     <?php foreach($kintore['Nice'] as $nice): ?>

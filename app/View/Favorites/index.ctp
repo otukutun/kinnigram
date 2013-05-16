@@ -23,20 +23,20 @@
         </div>
     </div><!-- span3 -->
     <div class="span9 content-setting">
-        <?php if ($kintores == null): ?>
-            <h4>筋肉写真を投稿しませんか？みんながあなたの筋肉を見たがっています。</h4>
+        <?php if ($favorites == null): ?>
+            <h4>お気に入り筋肉はありません。。</h4>
         <?php else: ?>
             <div class="span9 portfolio-images">
                 <ul class="nav nav-tabs">
-                <li class="active"><?php echo $this->Html->link(__('きんにく写真'), array('controller' => 'users', 'action' => 'view',$user['User']['id'])); ?></li>
-                    <li><?php echo $this->Html->link(__('お気に入り'), array('controller' => 'favorites', 'action' => 'index',$user['User']['id'])); ?></li>
+                <li><?php echo $this->Html->link(__('きんにく写真'), array('controller' => 'users', 'action' => 'view',$user['User']['id'])); ?></li>
+                    <li class="active"><?php echo $this->Html->link(__('お気に入り'), array('controller' => 'favorites', 'action' => 'index',$user['User']['id'])); ?></li>
                 </ul>
                 <div class="row">
                 <?php $i = 0; ?>
-                <?php foreach($kintores as $kintore): ?>
+                <?php foreach($favorites as $favorite): ?>
                     <?php if ($i == 0): ?> <div class="span9 list-images"> <?php endif; ?>
                     <div class="span2">
-                           <?php echo $this->Html->image('thumbnails' . DS . h($kintore['Kintore']['file']),array('url' => array('controller' => 'kintores', 'action' => 'view',$kintore['Kintore']['id']),'height' => '160','weight' => '120')); ?>
+                           <?php echo $this->Html->image('thumbnails' . DS . h($favorite['Kintore']['file']),array('url' => array('controller' => 'kintores', 'action' => 'view',$favorite['Kintore']['id']),'height' => '160','weight' => '120')); ?>
                            <!--<a href="#" class="thumbnail"><img src="http://placehold.it/160x120" alt=""></a>-->
                     </div>
                     <?php $i++; ?>

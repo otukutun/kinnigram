@@ -46,6 +46,7 @@
                         <!--<li><i class="icon-download-alt"></i> 7</li>-->
                         <li><i class="icon-thumbs-up"></i><?php echo ' ' . h($kintore['Kintore']['nice_sum']); ?></li>
                         <li><i class="icon-eye-open"></i> <?php echo ' ' . h($kintore['Kintore']['total_view']); ?></li>
+                        <li><i class="icon-star"></i> <?php echo ' ' . h($kintore['Kintore']['favorite_sum']); ?></li>
                     </ul>
                     </div><!-- count-galery-->
                     <div class="tags-galery">

@@ -19,7 +19,7 @@ class UsersController extends AppController {
          *
          * @var array
          */
-        public $uses = array('Nice','User','Kintore','Category','Comment');
+        public $uses = array('Nice','User','Kintore','Category','Comment','Favorite');
         public $paginate = array(
                 'limit' => 8);
         /**
@@ -177,7 +177,7 @@ class UsersController extends AppController {
                 $this->User->recursive = 0;
 
                 $this->set('user', $this->User->read(null, $id));
-                $this->set('kintores', $this->paginate('Kintore', array('user_id' => $id)));
+                $this->set('kintores', $this->paginate('Kintore', array('Kintore.user_id' => $id)));
                 $this->set('auth_user',$this->Session->read('auth_user'));
         }
 
