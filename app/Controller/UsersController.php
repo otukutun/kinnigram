@@ -30,7 +30,7 @@ class UsersController extends AppController {
 
         public function beforeFilter() {
                 parent::beforeFilter();
-                $this->Auth->allow('twitter_login','login','callback','twitter_add','about','top');
+                $this->Auth->allow('twitter_login','login','callback','twitter_add','about','top','question');
         }
 
         public function twitter_add() {//ユーザ登録のページ
@@ -41,6 +41,9 @@ class UsersController extends AppController {
 
         public function top() {//ユーザ登録のページ
         }
+
+        public function question() {//質問ページ
+        }
         public function twitter_login() {
                 $client = $this->createClient();
                 $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/nomado/users/callback');
@@ -49,19 +52,23 @@ class UsersController extends AppController {
                         $this->Session->write('twitter_request_token',$requestToken);
                         $this->redirect('https://api.twitter.com/oauth/authorize?oauth_token=' . $requestToken->key);
                 } else {
-                        $this->Session->setFlash(__('signed out'));
+                        $this->Session->setFlash(__('ログアウトしました。'));
                         $this->redirect(array('controller' => 'users','action' => 'login'));
                 }
 
         }
 
         public function callback() {
+                if ($this->request->query['denied']) {//アプリの認証をキャンセルされた際のリダイレクト処理
+                        $this->redirect(array('controller' => 'users','action' => 'login'));
+                }
                 $requestToken = $this->Session->read('twitter_request_token');
                 $client = $this->createClient();
                 $accessToken = $client->getAccessToken('https://api.twitter.com/oauth/access_token',$requestToken);
 
+
                 if ($accessToken) {
-                        debug($accessToken);
+                        //debug($accessToken);
                         $user_json = $client->get($accessToken->key, $accessToken->secret,'https://api.twitter.com/1.1/account/verify_credentials.json');
                         $user = json_decode($user_json, true);
 
@@ -77,12 +84,12 @@ class UsersController extends AppController {
                                         'oauth_token_secret' => $accessToken->secret,
                                 ));
 
-                                if ($this->Auth->login($auth)) {
+                                if ($this->Auth->login($auth)) {//ログインに成功したら
                                         $this->Session->write('auth_user',$user_id['User']);
                                         $this->redirect(array('controller' => 'kintores','action' => 'index'));
-                                } /*else {
+                                } else {//ログインに失敗したら
                                         $this->redirect(array('controller' => 'users','action' => 'login'));
-                        }*/
+                                }
                         } /*else {
                                 $this->redirect(array('controller' => 'users','action' => 'login'));
                 } */

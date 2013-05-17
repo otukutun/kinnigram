@@ -3,8 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>
-		<?php echo __('きんにぐらむ'); ?>
-		<?php echo $title_for_layout; ?>
+		<?php echo __('kinnigram'); ?>
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
@@ -109,7 +108,7 @@
             <div class="span6">
                 <ul>
                     <li><a href="https://twitter.com/otukutun">開発者について</a></li>
-                    <li><a href="#">プライバシーポリシー</a></li>
+                    <li><?php echo $this->Html->link("お問い合わせ", array('controller' => 'users', 'action' => 'question')); ?></li>
                 </ul>
             </div>
         </div>
