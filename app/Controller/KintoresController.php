@@ -34,7 +34,6 @@ class KintoresController extends AppController {
 	public function index() {
 		$this->Kintore->recursive = 1;
         $this->set('kintores', $this->paginate());
-        $this->set('auth_user',$this->Session->read('auth_user'));
 	}
 
 /**
@@ -51,7 +50,6 @@ class KintoresController extends AppController {
         $this->Kintore->countUp($id);
 		$this->Kintore->recursive = 2;
 		$this->set('kintore', $this->Kintore->read(null, $id));
-        $this->set('auth_user',$this->Session->read('auth_user'));
 	}
 
 /**
@@ -61,7 +59,7 @@ class KintoresController extends AppController {
  */
 	public function add() {
             if ($this->request->is('post')) {
-                    $user = $this->Session->read('user');
+                    $user = $this->Session->read('auth_user');
                     $this->request->data['Kintore']['user_id'] = $user['id'];
                     $this->Kintore->create();
                     $this->request->data['Kintore']['file'] = $this->Kintore->fileUpload($this->request->data['Kintore']['file']);
@@ -102,7 +100,6 @@ class KintoresController extends AppController {
             }
             $categories = $this->Kintore->Category->find('list');
             $this->set(compact('categories'));
-            $this->set('auth_user',$this->Session->read('auth_user'));
     }
 
     /**
@@ -169,7 +166,7 @@ class KintoresController extends AppController {
      * @param string $id
      * @return void
      */
-    public function delete($id = null) {
+    protected function _delete($id = null) {
             if (!$this->request->is('post')) {
                     throw new MethodNotAllowedException();
             }

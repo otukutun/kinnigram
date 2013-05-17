@@ -37,15 +37,9 @@ class UsersController extends AppController {
         }
 
         public function about() {//ユーザ登録のページ
-                if ($this->Auth->loggedIn()) {
-                        $this->set('auth_user',$this->Session->read('auth_user'));
-                } 
         }
 
         public function top() {//ユーザ登録のページ
-                if ($this->Auth->loggedIn()) {
-                        $this->set('auth_user',$this->Session->read('auth_user'));
-                } 
         }
         public function twitter_login() {
                 $client = $this->createClient();
@@ -120,7 +114,6 @@ class UsersController extends AppController {
         public function index() {
                 $this->User->recursive = 0;
                 $this->set('users', $this->paginate('User'));
-                $this->set('auth_user',$this->Session->read('auth_user'));
         }
 
     /*public function oauth_callback() {
@@ -178,7 +171,6 @@ class UsersController extends AppController {
 
                 $this->set('user', $this->User->read(null, $id));
                 $this->set('kintores', $this->paginate('Kintore', array('Kintore.user_id' => $id)));
-                $this->set('auth_user',$this->Session->read('auth_user'));
         }
 
         /**
@@ -186,7 +178,7 @@ class UsersController extends AppController {
          *
          * @return void
          */
-        public function add() {
+        protected function _add() {
                 if ($this->request->is('post')) {
                         $this->User->create();
                         if ($this->User->save($this->request->data)) {
@@ -271,7 +263,7 @@ class UsersController extends AppController {
          * @param string $id
          * @return void
          */
-        public function delete($id = null) {
+        protected function _delete($id = null) {
                 if (!$this->request->is('post')) {
                         throw new MethodNotAllowedException();
                 }

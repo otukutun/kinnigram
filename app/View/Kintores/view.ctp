@@ -46,7 +46,7 @@
             <div class="span3 sidebar-detail-menu">
             <ul>
                 <li>
-                    <?php $favorite_id = $this->Kintore->checkFavorite($kintore['Favorite'],$auth_user['username']); ?>
+                    <?php $favorite_id = $this->Kintore->checkFavorite($kintore['Favorite'],h($this->Session->read('auth_user.username'))); ?>
                     <?php if($favorite_id === false): ?>
                     <?php echo $this->Form->postLink(__('<i class="iconbig-black-star"></i>'), array('controller' => 'favorites', 'action' => 'add', $kintore['Kintore']['id']), array('escape' => false,'rel' =>'tooltip','title' => 'お気に入り登録')); ?></li>
                     <?php else: ?>
@@ -54,7 +54,7 @@
                     <?php endif; ?>
                 <li><?php echo $this->Html->link(__('<i class="iconbig-speak"></i>'), '#add-comment',array('escape' => false,'rel' =>'tooltip','title' => 'コメント投稿')); ?></li>
                 <li>
-                <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],$auth_user['username']); ?>
+                <?php $nice_id = $this->Kintore->checkNice($kintore['Nice'],h($this->Session->read('auth_user.username'))); ?>
                     <?php if($nice_id === false): ?>
                     <?php echo $this->Form->postLink('<i class="iconbig-thumbs-up"></i>', array('controller' => 'nices', 'action' => 'add', $kintore['Kintore']['id']), array('escape' => false,'rel' => 'tooltip','data-original-title' => 'いいね')); ?>
                     <?php else: ?>

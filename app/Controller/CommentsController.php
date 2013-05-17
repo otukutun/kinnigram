@@ -20,7 +20,7 @@ class CommentsController extends AppController {
  * @var array
  */
         //public $helpers = array('TwitterBootstrap.BootstrapForm', 'TwitterBootstrap.BootstrapPaginator');
-        public $uses = array('Nice','User','Kintore','Category','Comment');
+        public $uses = array('Nice','User','Kintore','Category','Comment','Favorite');
 /**
  * Components
  *
@@ -32,7 +32,7 @@ class CommentsController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	protected function _index() {
 		$this->Comment->recursive = 0;
 		$this->set('comments', $this->paginate());
 	}
@@ -43,7 +43,7 @@ class CommentsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	protected function _view($id = null) {
 		$this->Comment->id = $id;
 		if (!$this->Comment->exists()) {
 			throw new NotFoundException(__('Invalid %s', __('comment')));
@@ -99,7 +99,7 @@ class CommentsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	protected function _edit($id = null) {
 		$this->Comment->id = $id;
 		if (!$this->Comment->exists()) {
 			throw new NotFoundException(__('Invalid %s', __('comment')));
@@ -139,7 +139,7 @@ class CommentsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
+	protected function _delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}

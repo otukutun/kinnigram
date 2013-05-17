@@ -93,6 +93,11 @@ Configure::write('Dispatcher.filters', array(
 	'CacheDispatcher'
 ));
 
+Configure::write('Session',array(
+        'defaults' => 'php',
+        'autoRegenerate' => true,
+));
+
 /**
  * Configures default file logging options
  */

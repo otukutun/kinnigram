@@ -42,8 +42,6 @@ class FavoritesController extends AppController {
                 }
 
                 $this->Favorite->recursive = 0;
-                $auth_user = $this->Session->read('auth_user');
-                $this->set('auth_user',$auth_user);
                 $this->set('user',$this->User->read(null,$id));
                 $this->set('favorites', $this->paginate('Favorite', array('Favorite.user_id' => 1)));
         }
@@ -54,7 +52,7 @@ class FavoritesController extends AppController {
          * @param string $id
          * @return void
          */
-        public function view($id = null) {
+        protected function _view($id = null) {
                 $this->Favorite->id = $id;
                 if (!$this->Favorite->exists()) {
                         throw new NotFoundException(__('Invalid %s', __('favorite')));
@@ -107,7 +105,7 @@ class FavoritesController extends AppController {
          * @param string $id
          * @return void
          */
-        public function edit($id = null) {
+        protected function _edit($id = null) {
                 $this->Favorite->id = $id;
                 if (!$this->Favorite->exists()) {
                         throw new NotFoundException(__('Invalid %s', __('favorite')));
@@ -147,7 +145,7 @@ class FavoritesController extends AppController {
          * @param string $id
          * @return void
          */
-        public function delete($id = null) {
+        protected function _delete($id = null) {
                 if (!$this->request->is('post')) {
                         throw new MethodNotAllowedException();
                 }

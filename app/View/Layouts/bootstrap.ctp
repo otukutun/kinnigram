@@ -66,15 +66,15 @@
                     <ul class="nav pull-right">
                         <li class="divider-vertical"></li>
                         <?php if ($this->Session->check('Auth.User')): ?>
-                        <li><?php echo $this->Html->image(h($auth_user['file']),array('height' => 30, 'width' => 34)); ?></li>
+                        <li><?php echo $this->Html->image(h($this->Session->read('auth_user.file')),array('height' => 30, 'width' => 34)); ?></li>
                         <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo h($auth_user['username']); ?><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo h($this->Session->read('auth_user.username')); ?><b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><?php echo $this->Html->link("<i class='icon-user'></i>  ユーザ情報", array('controller' => 'users', 'action' => 'view',$auth_user['id']),array('escape' => false)); ?></li>
+                                <li><?php echo $this->Html->link("<i class='icon-user'></i>  ユーザ情報", array('controller' => 'users', 'action' => 'view',h($this->Session->read('auth_user.id'))),array('escape' => false)); ?></li>
                                 <li class="divider"></li>
-                                <li><?php echo $this->Html->link("<i class='icon-cog'></i>  ユーザ情報編集", array('controller' => 'users', 'action' => 'edit',$auth_user['id']),array('escape' => false)); ?></li>
+                                <li><?php echo $this->Html->link("<i class='icon-cog'></i>  ユーザ情報編集", array('controller' => 'users', 'action' => 'edit',h($this->Session->read('auth_user.id'))),array('escape' => false)); ?></li>
                                 <li class="divider"></li>
-                                <li><?php echo $this->Html->link("<i class='icon-cog'></i>  お気に入り一覧", array('controller' => 'favorites', 'action' => 'index',$auth_user['id']),array('escape' => false)); ?></li>
+                                <li><?php echo $this->Html->link("<i class='icon-star'></i>  お気に入り一覧", array('controller' => 'favorites', 'action' => 'index', h($this->Session->read('auth_user.id'))),array('escape' => false)); ?></li>
                                 <li class="divider"></li>
                                 <li><?php echo $this->Html->link("<i class='icon-off'></i>  ログアウト", array('controller' => 'users', 'action' => 'logout'),array('escape' => false)); ?></li>
                             </ul>
@@ -91,7 +91,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="container">
 
 		<!--<h1>きんにぐらむ</h1>-->
@@ -110,7 +109,7 @@
             <div class="span6">
                 <ul>
                     <li><a href="https://twitter.com/otukutun">開発者について</a></li>
-                    <li><a href="#">プライバシー</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
                 </ul>
             </div>
         </div>
