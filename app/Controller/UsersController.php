@@ -19,7 +19,7 @@ class UsersController extends AppController {
          *
          * @var array
          */
-        public $uses = array('Nice','User','Kintore','Category','Comment','Favorite');
+        public $uses = array('Nice','User','Kintore','Category','Comment','Favorite','Passport');
         public $paginate = array(
                 'limit' => 8);
         /**
@@ -45,9 +45,20 @@ class UsersController extends AppController {
         public function question() {//質問ページ
         }
         public function twitter_login() {
+                if ($auth = $this->Cookie->read('auth')) {//クッキーが合った場合はDBと照合してあればlogin処理させる
+                        if ($user = $this->Passport->checkCookie($auth['token'],$auth['type'])) {
+                                if ($this->Auth->login(array('User' => array('oauth_token' => $user['User']['oauth_token'],'oauth_token_secret' => $user['User']['oauth_token_secret'])))) {
+                                        $this->Session->write('auth_user',$user['User']);
+                                        $token = Security::generateAuthKey();
+                                        $this->Cookie->write('auth',array('token' => $token,'type' => 1));//pc→1,iphone→2,android→3
+                                        $this->Passport->updateCookie($user['Passport']['id'], $token, 1, $user['User']['id']);
+                                    $this->redirect(array('controller' => 'kintores','action' => 'index'));
+                                }
+                        }
+                }
+
                 $client = $this->createClient();
                 $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/nomado/users/callback');
-                debug($requestToken);
                 if ($requestToken) {
                         $this->Session->write('twitter_request_token',$requestToken);
                         $this->redirect('https://api.twitter.com/oauth/authorize?oauth_token=' . $requestToken->key);
@@ -55,7 +66,7 @@ class UsersController extends AppController {
                         $this->Session->setFlash(__('ログアウトしました。'));
                         $this->redirect(array('controller' => 'users','action' => 'login'));
                 }
-
+  
         }
 
         public function callback() {
@@ -68,7 +79,6 @@ class UsersController extends AppController {
 
 
                 if ($accessToken) {
-                        //debug($accessToken);
                         $user_json = $client->get($accessToken->key, $accessToken->secret,'https://api.twitter.com/1.1/account/verify_credentials.json');
                         $user = json_decode($user_json, true);
 
@@ -85,6 +95,9 @@ class UsersController extends AppController {
                                 ));
 
                                 if ($this->Auth->login($auth)) {//ログインに成功したら
+                                        $token = Security::generateAuthKey();
+                                        $this->Passport->save(array('Passport' => array('user_id' => $user_id['User']['id'], 'token' => $token, 'type' => 1)));
+                                        $this->Cookie->write('auth',array('token' => $token,'type' => 1));
                                         $this->Session->write('auth_user',$user_id['User']);
                                         $this->redirect(array('controller' => 'kintores','action' => 'index'));
                                 } else {//ログインに失敗したら
@@ -98,6 +111,20 @@ class UsersController extends AppController {
         }
 
         public function login() {
+                if ($auth = $this->Cookie->read('auth')) {
+                        if ($logined = $this->Passport->checkCookie($auth['token'],$auth['type'])) {
+                                $user = array('User' => array('oauth_token' => $logined['User']['oauth_token'],
+                                        'oauth_token_secret' => $logined['User']['oauth_token_secret'],
+                                ));
+                                if ($this->Auth->login($user)) {
+                                        $this->Session->write('auth_user',$logined['User']);
+                                        $token = Security::generateAuthKey();
+                                        $this->Cookie->write('auth',array('token' => $token,'type' => 1));//pc→1,iphone→2,android→3
+                                        $this->Passport->updateCookie($logined['Passport']['id'], $token, 1, $logined['User']['id']);
+                                        $this->redirect(array('controller' => 'kintores','action' => 'index'));
+                                } 
+                        }
+                }
         }
 
         public function logout() {
@@ -111,7 +138,8 @@ class UsersController extends AppController {
                         )
                 );
                 $this->Session->delete($this->Auth->sessionKey);
-                $this->redirect($this->Auth->logoutRedirect);
+                $this->Session->delete('auth_user');
+                $this->redirect(array('controller' => 'users','action' => 'top'));
         }
         /**
          * index method
