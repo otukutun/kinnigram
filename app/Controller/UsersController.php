@@ -329,6 +329,6 @@ class UsersController extends AppController {
         }
 
         private function createClient() {
-                return new OAuthClient('Ec5mcESyv0AhWrc46GbHrg', 'PFX8NjtBS1XdLuuHIhQ4TGFLH8NHzhP5ijWS8UK0Js');
+                return new OAuthClient('ACCESS_KEY', 'ACCESS_KEY_SECRET');
         }
 }

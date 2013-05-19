@@ -97,10 +97,15 @@ Configure::write('Session',array(
         'defaults' => 'php',
         'autoRegenerate' => true,
 ));
-
+/* twitter_api access_key and key_secret wrote in app/Config/const.php*/
+config("const");
 /**
  * Configures default file logging options
  */
+
+
+
+
 App::uses('CakeLog', 'Log');
 CakeLog::config('debug', array(
 	'engine' => 'FileLog',
