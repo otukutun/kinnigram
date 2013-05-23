@@ -52,7 +52,7 @@ class UsersController extends AppController {
                                         $token = Security::generateAuthKey();
                                         $this->Cookie->write('auth',array('token' => $token,'type' => 1));//pc→1,iphone→2,android→3
                                         $this->Passport->updateCookie($user['Passport']['id'], $token, 1, $user['User']['id']);
-                                    $this->redirect(array('controller' => 'kintores','action' => 'index'));
+                                        $this->redirect(array('controller' => 'kintores','action' => 'index'));
                                 }
                         }
                 }
@@ -139,6 +139,7 @@ class UsersController extends AppController {
                 );
                 $this->Session->delete($this->Auth->sessionKey);
                 $this->Session->delete('auth_user');
+                $this->Cookie->delete('auth');//pc→1,iphone→2,android→3
                 $this->redirect(array('controller' => 'users','action' => 'top'));
         }
         /**
@@ -288,7 +289,6 @@ class UsersController extends AppController {
                 } else {
                         $this->request->data = $this->User->read(null, $id);
                 }
-                $this->set('auth_user',$auth_user);
                 $this->set('user',$this->User->find('first',array('conditions' => array('id' => $id))));
         }
 
