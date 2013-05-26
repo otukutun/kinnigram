@@ -21,7 +21,7 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-    <?php echo $this->Html->meta('favicon.ico', FULL_BASE_URL . '/nomado/img/favicon.ico',array('type' => 'icon')); ?>
+    <?php echo $this->Html->meta('favicon.ico', FULL_BASE_URL . '/kinnigram/img/favicon.ico',array('type' => 'icon')); ?>
 	<!-- Le fav and touch icons -->
 	<!--
 	<link rel="shortcut icon" href="/ico/favicon.ico">
