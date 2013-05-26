@@ -56,14 +56,17 @@ class UsersController extends AppController {
                                 }
                         }
                 }
+                //debug($auth);
 
                 $client = $this->createClient();
-                $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/nomado/users/callback');
+                $requestToken = $client->getRequestToken('https://api.twitter.com/oauth/request_token', FULL_BASE_URL . '/kinnigram/users/callback');
                 if ($requestToken) {
                         $this->Session->write('twitter_request_token',$requestToken);
                         $this->redirect('https://api.twitter.com/oauth/authorize?oauth_token=' . $requestToken->key);
                 } else {
-                        $this->Session->setFlash(__('ログアウトしました。'));
+                        $this->Session->setFlash(__('ログインに失敗しました。'));
+                        debug($client);
+                        debug($requestToken);
                         $this->redirect(array('controller' => 'users','action' => 'login'));
                 }
   
@@ -329,6 +332,6 @@ class UsersController extends AppController {
         }
 
         private function createClient() {
-                return new OAuthClient('ACCESS_KEY', 'ACCESS_KEY_SECRET');
+                return new OAuthClient('Ec5mcESyv0AhWrc46GbHrg', 'PFX8NjtBS1XdLuuHIhQ4TGFLH8NHzhP5ijWS8UK0Js');
         }
 }
