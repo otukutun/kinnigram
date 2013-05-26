@@ -3,6 +3,8 @@
 #################################################
 /app/Config/database.php
 /app/Config/const.php
+/app/Config/core.php
+/app/Config/core.php.bak
 /app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
