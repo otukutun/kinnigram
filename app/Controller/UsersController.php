@@ -30,7 +30,7 @@ class UsersController extends AppController {
 
         public function beforeFilter() {
                 parent::beforeFilter();
-                $this->Auth->allow('twitter_login','login','callback','twitter_add','about','top','question');
+                $this->Auth->allow('twitter_login','login','callback','twitter_add','about','top','question','iphone-login');
         }
 
         public function twitter_add() {//ユーザ登録のページ
@@ -40,9 +40,14 @@ class UsersController extends AppController {
         }
 
         public function top() {//ユーザ登録のページ
+                $kintores = $this->Kintore->find('all',array('limit' => 4, 'order' => 'Kintore.id DESC'));
+                $this->set(compact('kintores'));
         }
 
         public function question() {//質問ページ
+        }
+
+        public function iphon_login() {//iPhone用のログインアクション
         }
         public function twitter_login() {
                 if ($auth = $this->Cookie->read('auth')) {//クッキーが合った場合はDBと照合してあればlogin処理させる
